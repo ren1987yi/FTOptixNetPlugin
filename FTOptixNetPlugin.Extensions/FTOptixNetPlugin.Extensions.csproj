@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <Title>FTOptixNetPlugin.Extensions</Title>
+	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+	  <Authors>Renyi</Authors>
+	  <Company></Company>
+	  <Product />
+	  <Description></Description>
+	  <PackageProjectUrl></PackageProjectUrl>
+	  <PackageTags>FTOptixNetPlugin.Extensions</PackageTags>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <Version>0.0.0.1-alpha</Version>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<OutputPath>bin\</OutputPath>
+		<NoWarn>1701;1702</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<OutputPath>bin\</OutputPath>
+		<NoWarn>1701;1702</NoWarn>
+	</PropertyGroup>
+	<Import Project="FTOptixNetPlugin.Extensions.references" />
+	<ItemGroup>
+	  <None Include="..\..\NetworkVideoServer\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+</Project>
+
