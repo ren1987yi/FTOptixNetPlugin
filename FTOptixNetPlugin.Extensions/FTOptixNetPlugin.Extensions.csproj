@@ -13,8 +13,9 @@
 	  <Product />
 	  <Description></Description>
 	  <PackageProjectUrl></PackageProjectUrl>
-	  <PackageTags>FTOptixNetPlugin.Extensions</PackageTags>
+	  <PackageTags>FTOptix;.Net;Plugin;Extensions</PackageTags>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <RepositoryUrl>https://github.com/ren1987yi/FTOptixNetPlugin.git</RepositoryUrl>
 	  <Version>0.0.0.1-alpha</Version>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
