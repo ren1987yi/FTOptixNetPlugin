@@ -1,19 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <TargetFramework>netstandard2.1</TargetFramework>
 
 	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	  <Title>FTOptixNetPlugin.Extensions</Title>
+	  <Title>FTOptixNetPlugin.IPP</Title>
 	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	  <Authors>Renyi</Authors>
 	  <Company></Company>
 	  <Product />
 	  <Description></Description>
 	  <PackageProjectUrl></PackageProjectUrl>
-	  <PackageTags>FTOptix;.Net;Plugin;Extensions</PackageTags>
+	  <PackageTags>FTOptix;.Net;Plugin;IPP</PackageTags>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <RepositoryUrl>https://github.com/ren1987yi/FTOptixNetPlugin.git</RepositoryUrl>
 	  <Version>0.0.0.1-beta</Version>
@@ -27,12 +25,13 @@
 		<OutputPath>bin\</OutputPath>
 		<NoWarn>1701;1702</NoWarn>
 	</PropertyGroup>
-	<Import Project="FTOptixNetPlugin.Extensions.references" />
+  <ItemGroup>
+    <PackageReference Include="SharpIppNext" Version="2.1.2" />
+  </ItemGroup>
 	<ItemGroup>
-	  <None Update="README.md">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
+		<None Update="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 </Project>
-

@@ -51,6 +51,9 @@ namespace FTOptixNetPlugin.Extensions
                                 , EventType.ForwardReferenceAdded | EventType.ForwardReferenceRemoved
                                 , affinityId
                                 );
+
+
+           
         }
 
 

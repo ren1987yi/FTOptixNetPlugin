@@ -1,4 +1,5 @@
-﻿using FTOptix.ODBCStore;
+﻿using FTOptix.InfluxDBStore;
+using FTOptix.ODBCStore;
 using FTOptix.SQLiteStore;
 using FTOptix.Store;
 using UAManagedCore;
@@ -26,9 +27,12 @@ namespace FTOptixNetPlugin.Extensions
                     return "MYSQL";
                 }
 
-
+                
             }
-
+            else if (t == typeof(InfluxDBStore))
+            {
+                return "InfluxDB";
+            }
             return "Undefined";
         }
 

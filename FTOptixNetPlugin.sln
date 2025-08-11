@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36301.6 d17.14
+VisualStudioVersion = 17.14.36301.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTOptixNetPlugin.Extensions", "FTOptixNetPlugin.Extensions\FTOptixNetPlugin.Extensions.csproj", "{3A1CE03E-3154-4928-AE86-0F01470075F8}"
 EndProject
@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTOptixNetPlugin.IPP", "FTOptixNetPlugin.IPP\FTOptixNetPlugin.IPP.csproj", "{8434FC3A-796A-47D4-88EC-5337B6A53B76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleCode", "SampleCode\SampleCode.csproj", "{8118B973-1EEC-4C86-B9AA-48BFC84F4F2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +30,14 @@ Global
 		{1F4E061D-E565-4425-914F-BF3715EFC362}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F4E061D-E565-4425-914F-BF3715EFC362}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F4E061D-E565-4425-914F-BF3715EFC362}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8434FC3A-796A-47D4-88EC-5337B6A53B76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8434FC3A-796A-47D4-88EC-5337B6A53B76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8434FC3A-796A-47D4-88EC-5337B6A53B76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8434FC3A-796A-47D4-88EC-5337B6A53B76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8118B973-1EEC-4C86-B9AA-48BFC84F4F2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8118B973-1EEC-4C86-B9AA-48BFC84F4F2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8118B973-1EEC-4C86-B9AA-48BFC84F4F2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8118B973-1EEC-4C86-B9AA-48BFC84F4F2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

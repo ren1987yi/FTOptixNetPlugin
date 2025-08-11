@@ -1,9 +1,15 @@
 ﻿using FTOptix.HMIProject;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+using UAManagedCore;
 
-namespace FTOptixNetPlugin.Tools
+namespace FTOptixNetPlugin.Extensions
 {
-    public static class LogFile
+    public class LogHelper
     {
         public static string GetLogFilePath()
         {
@@ -23,20 +29,11 @@ namespace FTOptixNetPlugin.Tools
             logFilePath = Path.Combine(logFilePath, "FTOptixRuntime.0.log");
             return logFilePath;
 
-
-            
         }
 
 
 
-
-
-
-
-
-
-
-        internal static string FindParentFolder(string startPath, string targetFolderName)
+        private static string FindParentFolder(string startPath, string targetFolderName)
         {
             string currentPath = startPath;
             while (currentPath != null)
@@ -48,7 +45,7 @@ namespace FTOptixNetPlugin.Tools
                 }
                 currentPath = directoryInfo.Parent?.FullName;
             }
-            return null;
+            return string.Empty;
         }
     }
 }

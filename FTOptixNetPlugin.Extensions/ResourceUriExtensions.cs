@@ -1,6 +1,7 @@
 ﻿#define FTOptix_V1_6
 using FTOptix.Core;
 using System.Text.RegularExpressions;
+using UAManagedCore;
 
 namespace FTOptixNetPlugin.Extensions
 {

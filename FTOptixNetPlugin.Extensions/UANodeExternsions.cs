@@ -1,4 +1,5 @@
-﻿using FTOptix.HMIProject;
+﻿using FTOptix.CoreBase;
+using FTOptix.HMIProject;
 using UAManagedCore;
 
 namespace FTOptixNetPlugin.Extensions
@@ -158,6 +159,8 @@ namespace FTOptixNetPlugin.Extensions
         /// <exception cref="Exception"></exception>
         public static void DeepCopy(this IUANode obj, IUANode target)
         {
+            
+         
             //var root = InformationModel.MakeObject(obj.BrowseName);
             foreach (var item in obj.Children)
             {
@@ -187,5 +190,33 @@ namespace FTOptixNetPlugin.Extensions
                 }
             }
         }
+
+        public static string GetCurrentProjectBrowsePath(this IUANode node)
+        {
+            if (node.Owner == Project.Current || node.BrowseName == "Root")
+                return node.BrowseName;
+            return GetCurrentProjectBrowsePath(node.Owner) + "/" + node.BrowseName;
+        }
+
+
+
+        public static bool IsInStartedSubtree(this IUANode node)
+        {
+            if (node.Status == NodeStatus.Detached)
+            {
+                return false;
+            }
+            while (node != null)
+            {
+                if (node.Status == NodeStatus.Started)
+                {
+                    return true;
+                }
+                node = node.Owner;
+            }
+            return false;
+        }
+
+
     }
 }
