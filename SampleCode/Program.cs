@@ -119,6 +119,13 @@ namespace SampleCode
                 _logger.LogInformation("OK");
                 return Results.Text("HAHA");
             }
+
+
+            [Route(HttpMethods.Get)]
+            public IResult T2()
+            {
+                return Results.Redirect("./t1");
+            }
         }
 
 #endif

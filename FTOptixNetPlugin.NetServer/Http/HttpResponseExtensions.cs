@@ -22,5 +22,15 @@ namespace FTOptixNetPlugin.NetServer.Http
         {
             return response.MakeErrorResponse(500);
         }
+
+        public static HttpResponse Redirect(this HttpResponse response,string location)
+        {
+            response.Clear();
+            response.SetBegin(301);
+            response.SetHeader("Location", location);
+            response.SetBody("");
+            return response;
+        }
+
     }
 }

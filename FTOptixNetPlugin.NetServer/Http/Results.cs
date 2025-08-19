@@ -17,5 +17,10 @@ namespace FTOptixNetPlugin.NetServer.Http
         {
             return new TextResult(content);
         }
+
+        public static IResult Redirect(string location)
+        {
+            return new Redirect(location);
+        }
     }
 }
