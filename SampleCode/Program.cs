@@ -1,5 +1,5 @@
-﻿//#define IPP
-#define WebServer
+﻿#define IPP
+//#define WebServer
 
 #if IPP
 using FTOptixNetPlugin.IPP;
@@ -56,7 +56,7 @@ namespace SampleCode
             Console.ReadKey();
             client.PrintJobStatusChanged -= Client_PrintJobStatusChanged;
         }
-         private static void Client_PrintJobStatusChanged(object? sender, PrintJobEventArgs e)
+        private static void Client_PrintJobStatusChanged(object? sender, PrintJobEventArgs e)
         {
             //throw new NotImplementedException();
             Console.WriteLine(e.Job.Status);
