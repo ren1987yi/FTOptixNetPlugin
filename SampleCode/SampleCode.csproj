@@ -9,6 +9,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FTOptixNetPlugin.IPP\FTOptixNetPlugin.IPP.csproj" />
+    <ProjectReference Include="..\FTOptixNetPlugin.NetServer\FTOptixNetPlugin.NetServer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="wwwroot\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

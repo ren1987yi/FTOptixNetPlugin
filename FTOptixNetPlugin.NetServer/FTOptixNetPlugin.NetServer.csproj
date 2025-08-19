@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <Title>FTOptixNetPlugin.NetServer</Title>
+	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+	  <Authors>Renyi</Authors>
+	  <Company></Company>
+	  <Product />
+	  <Description></Description>
+	  <PackageProjectUrl></PackageProjectUrl>
+	  <PackageTags>FTOptix;.Net;Plugin;NetServer</PackageTags>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <RepositoryUrl>https://github.com/ren1987yi/FTOptixNetPlugin.git</RepositoryUrl>
+	  <Version>0.0.0.1-alpha</Version>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+		<PackageReference Include="NLog" Version="6.0.3" />
+		<PackageReference Include="NLog.Extensions.Logging" Version="6.0.3" />
+	</ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<OutputPath>bin\</OutputPath>
+		<NoWarn>1701;1702</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<OutputPath>bin\</OutputPath>
+		<NoWarn>1701;1702</NoWarn>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<None Update="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+
+</Project>
