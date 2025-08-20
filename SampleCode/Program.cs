@@ -1,6 +1,6 @@
-﻿#define IPP
+﻿//#define IPP
 //#define WebServer
-
+#define JSON
 #if IPP
 using FTOptixNetPlugin.IPP;
 #endif
@@ -28,6 +28,11 @@ namespace SampleCode
 #if WebServer
             Test_WebServer();
 #endif
+
+#if JSON
+            Test_DynamicObject.JsonToObject();
+#endif
+
             Console.WriteLine("bye bye");
         }
 

@@ -15,7 +15,7 @@
 	<PackageTags>FTOptix;.Net;Plugin;Extensions</PackageTags>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<RepositoryUrl>https://github.com/ren1987yi/FTOptixNetPlugin.git</RepositoryUrl>
-	<Version>0.0.0.1-beta</Version>
+	<Version>0.0.0.2</Version>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
