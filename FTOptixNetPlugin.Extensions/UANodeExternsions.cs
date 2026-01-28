@@ -251,12 +251,11 @@ namespace FTOptixNetPlugin.Extensions
 
 
         /// <summary>
-        /// Json Deserial to UANode
+        /// Json content Deserialize to UANode
         /// </summary>
         /// <param name="node"></param>
-        /// <param name="browseName"></param>
         /// <param name="jsonContent"></param>
-        public static void JsonDeserialize(this IUANode node,string browseName,string jsonContent)
+        public static void JsonDeserialize(this IUANode node,string jsonContent)
         {
             var data = System.Text.Json.JsonSerializer.Deserialize<System.Dynamic.ExpandoObject>(jsonContent);
 
@@ -265,8 +264,7 @@ namespace FTOptixNetPlugin.Extensions
                 return;
             }
 
-            var child = InformationModel.MakeObject(browseName);
-            node.Add(child);
+
 
             foreach (var item in data)
             {
@@ -276,7 +274,7 @@ namespace FTOptixNetPlugin.Extensions
                     var el = (JsonElement)item.Value;
 
 
-                    InternalJsonDeserialize(item.Key, el, child);
+                    InternalJsonDeserialize(item.Key, el, node);
 
                     
 

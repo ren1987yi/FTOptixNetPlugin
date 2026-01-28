@@ -72,5 +72,43 @@
         {
             return new DateTime(dateTime.Year, dateTime.Month, 1, 0, 0, 0);
         }
+
+
+
+        public static long ToUnixTimeMilliSeconds(DateTime dateTime)
+        {
+            DateTimeOffset dto = new DateTimeOffset(dateTime.ToUniversalTime());
+            return dto.ToUnixTimeMilliseconds();
+        }
+
+
+        public static long ToUnixTimeSeconds(DateTime dateTime)
+        {
+            DateTimeOffset dto = new DateTimeOffset(dateTime.ToUniversalTime());
+            return dto.ToUnixTimeSeconds();
+        }
+
+      
+
+        public static DateTime UTC2Datetime(long ts,int time_unit= 1)
+        {
+            
+            DateTime ttss = DateTime.MinValue;
+
+            switch (time_unit) {
+                case 1: 
+                    return DateTime.UnixEpoch.AddSeconds(ts);
+                case 3:
+                    
+                    return DateTime.UnixEpoch.AddMilliseconds(ts);
+                case 6:
+                    return DateTime.UnixEpoch.AddMicroseconds(ts);
+                    
+
+            }
+            return ttss;
+
+            
+        }
     }
 }

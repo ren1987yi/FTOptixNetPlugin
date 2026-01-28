@@ -22,5 +22,12 @@ namespace FTOptixNetPlugin.NetServer.Http
         {
             return new Redirect(location);
         }
+
+
+        public static IResult Html(string context)
+        {
+            return new HtmlResult(context);
+        }
+
     }
 }

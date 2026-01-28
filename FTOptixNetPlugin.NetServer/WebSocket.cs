@@ -579,7 +579,7 @@ namespace FTOptixNetPlugin.NetServer
         /// <summary>
         /// Handshaked flag
         /// </summary>
-        internal bool WsHandshaked;
+        public bool WsHandshaked;
         /// <summary>
         /// Received frame flag
         /// </summary>

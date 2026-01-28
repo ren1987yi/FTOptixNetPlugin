@@ -1,11 +1,5 @@
 ﻿using FTOptix.HMIProject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using UAManagedCore;
 
 namespace FTOptixNetPlugin.Extensions
 {
@@ -22,10 +16,12 @@ namespace FTOptixNetPlugin.Extensions
                     logFilePath = "/persistent/log/Rockwell_Automation/FactoryTalk_Optix/FTOptixApplication";
                 }
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && string.IsNullOrWhiteSpace(logFilePath))
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && string.IsNullOrWhiteSpace(logFilePath) == true)
             {
-                logFilePath ??= Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Rockwell Automation\FactoryTalk Optix\Emulator\Log", Project.Current.BrowseName);
+                logFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Rockwell Automation\FactoryTalk Optix\Emulator\Log", Project.Current.BrowseName);
             }
+
+
             logFilePath = Path.Combine(logFilePath, "FTOptixRuntime.0.log");
             return logFilePath;
 

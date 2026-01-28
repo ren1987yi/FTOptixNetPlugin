@@ -1,0 +1,119 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+
+
+
+
+<div class="card">
+    <div class="card-header">
+        CIP Parameter
+    </div>
+    <div class="card-body">
+        <p class="card-text">PW Rinsing</p>
+
+
+        <div class="row gx-4 gy-4">
+            <div class="col ">
+                <div class="row">
+                    <div class="col-8">
+                        <label for="basic-url" class="form-label">Rinsing Time (min)</label>
+                    </div>
+                    <div class="col-2">
+                        <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="col-1">
+                        <label>max</label>
+                    </div>
+                    <div class="col-1">
+                        <label>min</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <label for="basic-url" class="form-label">Rinsing Time (min)</label>
+                    </div>
+                    <div class="col-2">
+                        <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="col-1">
+                        <label>max</label>
+                    </div>
+                    <div class="col-1">
+                        <label>min</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="row gx-4 gy-4">
+                    <div class="col-8">
+                        <label for="basic-url" class="form-label">Rinsing Time (min)</label>
+                    </div>
+                    <div class="col-2">
+                        <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="col-1">
+                        <label>max</label>
+                    </div>
+                    <div class="col-1">
+                        <label>min</label>
+                    </div>
+                </div>
+                <div class="row gx-4 gy-4">
+                    <div class="col-8">
+                        <label for="basic-url" class="form-label">Rinsing Time (min)</label>
+                    </div>
+                    <div class="col-2">
+                        <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="col-1">
+                        <label>max</label>
+                    </div>
+                    <div class="col-1">
+                        <label>min</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
+    </div>
+</div>
+
+
+@code {
+    private int currentCount = 0;
+    private int _value
+    {
+        get 
+        { return currentCount; }
+
+        set
+        {
+  
+            currentCount = value;
+        }
+
+    }
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+
+    private void OnInputChange(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int newValue))
+        {
+            _value = newValue;
+        }
+    }
+}

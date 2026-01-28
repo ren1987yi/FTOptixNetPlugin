@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FTOptixNetPlugin.IPP\FTOptixNetPlugin.IPP.csproj" />
     <ProjectReference Include="..\FTOptixNetPlugin.NetServer\FTOptixNetPlugin.NetServer.csproj" />
+    <ProjectReference Include="..\NetProtainerApi\NetProtainerApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +18,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="wwwroot\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="wwwroot\ws\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

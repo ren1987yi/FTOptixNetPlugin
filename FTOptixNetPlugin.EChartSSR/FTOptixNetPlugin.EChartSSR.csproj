@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <Platforms>AnyCPU;ARM64</Platforms>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <Description>EChart SSR Library</Description>
+	  <Version></Version>
+	  <AssemblyVersion></AssemblyVersion>
+	  <Authors>Renyi</Authors>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <Version>0.0.0.2</Version>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<OutputPath>bin\Debug\</OutputPath>
+		<NoWarn>1701;1702</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<OutputPath>bin\Release\</OutputPath>
+		<NoWarn>1701;1702</NoWarn>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="echartlib\echarts.min.js" copyToOutput="true" CopyToOutputDirectory="Always">
+		<Pack>true</Pack>
+		<PackagePath>contentFiles\any\any\echartlib;content</PackagePath>
+		<IncludeInPackage>true</IncludeInPackage>
+		<CopyToOutput>true</CopyToOutput>
+		<BuildAction>Content</BuildAction>
+		<copyToOutput>true</copyToOutput>
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.ClearScript" Version="7.4.5" />
+		<PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.4.5" />
+		<PackageReference Include="Microsoft.ClearScript.V8.Native.linux-arm" Version="7.4.5" />
+		<PackageReference Include="Microsoft.ClearScript.V8.Native.linux-arm64" Version="7.4.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+</Project>

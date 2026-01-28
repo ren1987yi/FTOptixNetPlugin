@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Process.PIDLoader</Title>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<Authors>Renyi</Authors>
+		<Company></Company>
+		<Product />
+		<Description></Description>
+		<PackageProjectUrl></PackageProjectUrl>
+		<PackageTags>FTOptix;.Net;Process;Toolkits</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  
+		<Version>0.0.0.1-beta</Version>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+
+	</PropertyGroup>
+	<Import Project="FTOptix.references" />
+	
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\..\Work\Optix\ACadSharp\src\ACadSharp\ACadSharp.csproj">
+		
+	  </ProjectReference>
+	  <ProjectReference Include="..\..\netDxf\netDxf\netDxf.csproj">
+	    
+	  </ProjectReference>
+	  <ProjectReference Include="..\FTOptixNetPlugin.Extensions\FTOptixNetPlugin.Extensions.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+</Project>

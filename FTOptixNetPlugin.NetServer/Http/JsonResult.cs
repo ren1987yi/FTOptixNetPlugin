@@ -18,7 +18,16 @@ namespace FTOptixNetPlugin.NetServer.Http
         public HttpResponse MakeResponse(HttpResponse response)
         {
             //throw new NotImplementedException();
-            return response.MakeGetResponse(JsonSerializer.Serialize(_value,_options),"application/json; charset=UTF-8");
+
+            if(typeof(TValue) == typeof(string))
+            {
+                return response.MakeGetResponse(_value.ToString(), "application/json; charset=UTF-8");
+            }
+            else
+            {
+                return response.MakeGetResponse(JsonSerializer.Serialize(_value, _options), "application/json; charset=UTF-8");
+            }
+
         }
     }
 }

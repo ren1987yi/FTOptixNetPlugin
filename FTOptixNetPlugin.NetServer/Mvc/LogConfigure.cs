@@ -85,7 +85,7 @@ namespace FTOptixNetPlugin.NetServer.Mvc
 
 
 
-        internal LoggingConfiguration Build()
+        public LoggingConfiguration Build()
         {
             var config = new NLog.Config.LoggingConfiguration();
             foreach (var rule in rules)

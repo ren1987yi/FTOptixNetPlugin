@@ -1,0 +1,5 @@
+﻿@RecipeEditorApp_HostAddress = http://localhost:5236
+
+GET {{RecipeEditorApp_HostAddress}}/api/recipe
+
+###

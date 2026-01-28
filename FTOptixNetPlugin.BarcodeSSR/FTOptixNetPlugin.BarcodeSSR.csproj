@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Platforms>AnyCPU;ARM64</Platforms>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Description>JSBarcode SSR Library</Description>
+		<Version></Version>
+		<AssemblyVersion></AssemblyVersion>
+		<Authors>Renyi</Authors>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Version>0.0.0.1</Version>
+	</PropertyGroup>
+
+
+
+	<ItemGroup>
+		<Content Include="barcodelib\barcode\index.js" copyToOutput="true" CopyToOutputDirectory="Always">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\barcodelib\barcode;content</PackagePath>
+			<IncludeInPackage>true</IncludeInPackage>
+			<CopyToOutput>true</CopyToOutput>
+			<BuildAction>Content</BuildAction>
+			<copyToOutput>true</copyToOutput>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</Content>
+		<Content Include="barcodelib\qrcode\index.js" copyToOutput="true" CopyToOutputDirectory="Always">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\barcodelib\qrcode;content</PackagePath>
+			<IncludeInPackage>true</IncludeInPackage>
+			<CopyToOutput>true</CopyToOutput>
+			<BuildAction>Content</BuildAction>
+			<copyToOutput>true</copyToOutput>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</Content>
+		<Content Include="barcodelib\svg2url\index.js"  copyToOutput="true" CopyToOutputDirectory="Always">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\barcodelib\svg2url;content</PackagePath>
+			<IncludeInPackage>true</IncludeInPackage>
+			<CopyToOutput>true</CopyToOutput>
+			<BuildAction>Content</BuildAction>
+			<copyToOutput>true</copyToOutput>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.ClearScript" Version="7.4.5" />
+		<PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.4.5" />
+		<PackageReference Include="Microsoft.ClearScript.V8.Native.linux-arm" Version="7.4.5" />
+		<PackageReference Include="Microsoft.ClearScript.V8.Native.linux-arm64" Version="7.4.5" />
+	</ItemGroup>
+</Project>

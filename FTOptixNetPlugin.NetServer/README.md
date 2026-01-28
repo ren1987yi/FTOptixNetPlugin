@@ -16,18 +16,22 @@
 
 ```csharp
 	var www_root = "./wwwroot";
-	//logging configuration
-	var config = new LogConfigure();
+    //singleton object
+    Dictionary<string, string> obj = new Dictionary<string, string>();
+    //logging configuration
+    var config = new LogConfigure();
 
-	config.AddColordConsole(FTOptixNetPlugin.NetServer.Mvc.LogLevel.Trace, FTOptixNetPlugin.NetServer.Mvc.LogLevel.Fatal);
-	config.AddFile(FTOptixNetPlugin.NetServer.Mvc.LogLevel.Trace, FTOptixNetPlugin.NetServer.Mvc.LogLevel.Fatal,"log.txt");
+    config.AddColordConsole(FTOptixNetPlugin.NetServer.Mvc.LogLevel.Trace, FTOptixNetPlugin.NetServer.Mvc.LogLevel.Fatal);
+    config.AddFile(FTOptixNetPlugin.NetServer.Mvc.LogLevel.Trace, FTOptixNetPlugin.NetServer.Mvc.LogLevel.Fatal,"log.txt");
 
-	//
-	var app = new WebApplication(System.Net.IPAddress.Any, 49000, string.Empty, www_root, TimeSpan.FromSeconds(3600), config);
-	//use routing
-	app.UseRouting();
-	//use static files
-	app.UseStaticFile();
-	//run web application
-	app.Run();
+    //
+    var app = new WebApplication(System.Net.IPAddress.Any, 49000, string.Empty, www_root, TimeSpan.FromSeconds(3600), config);
+    //dependency injection 
+    app.Services.AddSingleton(obj);
+    //use routing
+    app.UseRouting();
+    //use static files
+    app.UseStaticFile();
+    //run web application
+    app.Run();
 ```

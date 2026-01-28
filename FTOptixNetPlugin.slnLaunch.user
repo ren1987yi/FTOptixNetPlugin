@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "WebSocket",
+    "Projects": [
+      {
+        "Path": "SampleCode\\SampleCode.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "SampleCode2\\SampleCode2.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

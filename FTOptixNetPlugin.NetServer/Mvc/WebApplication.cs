@@ -15,7 +15,7 @@ namespace FTOptixNetPlugin.NetServer.Mvc
         public ServiceCollection Services { get => _services; }
 
 
-
+        #region Private Members
 
         private readonly ServiceCollection _services = new ServiceCollection();
         private ServiceProvider _serviceProvider;
@@ -31,8 +31,18 @@ namespace FTOptixNetPlugin.NetServer.Mvc
         private TimeSpan? _timeout;
 
         private ILogger<WebApplication> _logger;
+        #endregion
 
-
+        /// <summary>
+        /// 
+        /// 
+        /// </summary>
+        /// <param name="address">server ip</param>
+        /// <param name="port"></param>
+        /// <param name="prefix">static prefix</param>
+        /// <param name="document_path">web document root path</param>
+        /// <param name="timeout"></param>
+        /// <param name="logConfig"></param>
         public WebApplication(IPAddress address, int port, string prefix, string document_path, TimeSpan? timeout = null, LogConfigure logConfig = null)
         {
             this._address = address;

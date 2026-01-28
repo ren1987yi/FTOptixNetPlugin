@@ -15,7 +15,7 @@
 	  <PackageTags>FTOptix;.Net;Plugin;NetServer</PackageTags>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <RepositoryUrl>https://github.com/ren1987yi/FTOptixNetPlugin.git</RepositoryUrl>
-	  <Version>0.0.0.1-alpha</Version>
+	  <Version>0.0.0.2</Version>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 	<ItemGroup>
@@ -24,11 +24,11 @@
 		<PackageReference Include="NLog.Extensions.Logging" Version="6.0.3" />
 	</ItemGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<OutputPath>bin\</OutputPath>
+		<OutputPath>bin\Debug\</OutputPath>
 		<NoWarn>1701;1702</NoWarn>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<OutputPath>bin\</OutputPath>
+		<OutputPath>bin\Release\</OutputPath>
 		<NoWarn>1701;1702</NoWarn>
 	</PropertyGroup>
 	
