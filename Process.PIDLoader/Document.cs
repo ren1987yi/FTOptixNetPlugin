@@ -198,7 +198,7 @@ namespace Process.PIDLoader
 
                     output += $"THE FILE {file} DOES NOT EXIST \n";
                 }
-
+                
                 return null;
             }
 
@@ -224,7 +224,7 @@ namespace Process.PIDLoader
             }
 
             DxfDocument dxf = DxfDocument.Load(file);
-
+            
             if (dxf == null)
             {
                 if (debug)
@@ -253,7 +253,13 @@ namespace Process.PIDLoader
                 using (DwgReader reader = new DwgReader(file))
                 {
                     doc = reader.Read();
+                    
                 }
+                var b = doc.BlockRecords.First();
+                var e = b.Entities.First();
+                
+   
+                
                 return new Document(doc);
 
             }

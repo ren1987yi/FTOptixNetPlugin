@@ -23,7 +23,7 @@ namespace Process.PIDLoader.Elements
 
 
         public string ElementTypeName { get => ElementType.Insert.ToString();  }
-        public string Summary => _blockName;
+        public string Summary => $"Block Name:{_blockName}; Position:{Position.X:f3}-{Position.Y:f3}; Rotation:{Rotation:f1}";
         public BlockReference(string blockName,Vector3 position,float rotation,Vector3 scale)
         {
             _blockName = blockName;

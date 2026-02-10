@@ -44,6 +44,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CADImportConfigure", "CADIm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACadSharp", "..\..\..\Work\Optix\ACadSharp\src\ACadSharp\ACadSharp.csproj", "{6D5EED47-37B3-CCF6-522A-24143BEA0F33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CADExtract", "CADExtract\CADExtract.csproj", "{75405555-5C8C-46CD-BE72-066F87FBF2A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadPath", "CadPath\CadPath.csproj", "{3CB7D297-B4E4-4766-8EB3-436966E574A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadExtensions", "CadExtensions\CadExtensions.csproj", "{6CBF082C-A25C-48B9-ADD1-88B42A7EBAC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,6 +128,18 @@ Global
 		{6D5EED47-37B3-CCF6-522A-24143BEA0F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D5EED47-37B3-CCF6-522A-24143BEA0F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D5EED47-37B3-CCF6-522A-24143BEA0F33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75405555-5C8C-46CD-BE72-066F87FBF2A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75405555-5C8C-46CD-BE72-066F87FBF2A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75405555-5C8C-46CD-BE72-066F87FBF2A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75405555-5C8C-46CD-BE72-066F87FBF2A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CB7D297-B4E4-4766-8EB3-436966E574A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CB7D297-B4E4-4766-8EB3-436966E574A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CB7D297-B4E4-4766-8EB3-436966E574A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CB7D297-B4E4-4766-8EB3-436966E574A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CBF082C-A25C-48B9-ADD1-88B42A7EBAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CBF082C-A25C-48B9-ADD1-88B42A7EBAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CBF082C-A25C-48B9-ADD1-88B42A7EBAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CBF082C-A25C-48B9-ADD1-88B42A7EBAC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

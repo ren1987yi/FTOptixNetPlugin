@@ -20,7 +20,7 @@ namespace Process.PIDLoader.Elements
 
         public string ElementTypeName { get => ElementType.Text.ToString(); }
 
-        public string Summary => Value;
+        public string Summary => $"Text:{Value}; Position:{Position.X:f3}-{Position.Y:f3}; Rotation:{Rotation:f1}";
 
         public Text(string text,Vector3 position,double rotation)
         {

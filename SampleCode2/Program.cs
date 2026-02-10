@@ -22,8 +22,12 @@ using Scriban.Runtime;
 #endif
 
 #if DXF
+using ACadSharp;
+using ACadSharp.IO;
+using CSMath;
 using NLog.Targets;
 using Process.PIDLoader;
+using System.Diagnostics;
 #endif
 
 namespace SampleCode2
@@ -209,7 +213,8 @@ namespace SampleCode2
             //Console.WriteLine(string.Format(pattern, DateTime.Now));
 
 #if DXF
-            PID_LOADER();
+            CADAnalysiser.Go();
+            //PID_LOADER();
 #endif
 
 
@@ -466,6 +471,48 @@ b = {{ item.b }}
 #if DXF
         static void PID_LOADER()
         {
+            var dwgF = @"D:\Work\Projects\PID Loader\20260124蛋筒-18mm-01(1).dwg";
+
+            CadDocument dwg;
+
+            try
+            {
+                using (DwgReader reader = new DwgReader(dwgF))
+                {
+                    dwg = reader.Read();
+
+                }
+            
+                //var e = dwg.Entities.First();
+
+                //var sline = e as ACadSharp.Entities.Spline;
+
+                foreach(var sline in dwg.Entities.OfType<ACadSharp.Entities.Spline>())
+                {
+                    var ps = new List<XYZ>();
+                    sline.SplineToPolyLine(sline, 1, ps);
+
+                    Console.WriteLine("========SPLINE=====");
+                    
+                    foreach(var p in ps)
+                    {
+                        Console.WriteLine($"{p.X:f6},{p.Y:f6}                  {p.Z}");
+                    }
+
+                    Console.WriteLine();
+                    Console.WriteLine();
+                }
+
+                
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return;
+
+
             var filepath = @"D:\Work\Projects\PID Loader\2024-010Pb20240910.dxf";
             var doc = Document.LoadDxf(filepath,0 ,0,0,0, true,out var err);
             Console.Write(err);

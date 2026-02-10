@@ -14,7 +14,7 @@ namespace Process.PIDLoader.Elements
         private double _thickness;
 
         private RGBA _color;
-        public string Summary => string.Empty;
+        public string Summary => $"Vertex Count:{_vertexes.Count}";
         public string ElementTypeName { get => ElementType.Line.ToString(); }
         public Polyline(IEnumerable<Vector3> points,double thickness,RGBA color)
         {
