@@ -50,6 +50,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadPath", "CadPath\CadPath.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadExtensions", "CadExtensions\CadExtensions.csproj", "{6CBF082C-A25C-48B9-ADD1-88B42A7EBAC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSeriesAlgorithms", "TimeSeriesAlgorithms\TimeSeriesAlgorithms.csproj", "{8A0C78E6-C010-49AE-99FE-2A13790D5408}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -140,6 +142,10 @@ Global
 		{6CBF082C-A25C-48B9-ADD1-88B42A7EBAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CBF082C-A25C-48B9-ADD1-88B42A7EBAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CBF082C-A25C-48B9-ADD1-88B42A7EBAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A0C78E6-C010-49AE-99FE-2A13790D5408}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A0C78E6-C010-49AE-99FE-2A13790D5408}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A0C78E6-C010-49AE-99FE-2A13790D5408}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A0C78E6-C010-49AE-99FE-2A13790D5408}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
