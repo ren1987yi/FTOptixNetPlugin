@@ -1,0 +1,154 @@
+﻿@namespace FrontEnd_BlazorApp.Pages.Workshop.JsFunc
+
+@using FrontEnd_BlazorApp.Models.JsFunc
+@page "/workshop/jsfunc"
+
+
+<PageContainer Title="JS Plug-In">
+    <Breadcrumb>
+        <Breadcrumb>
+            <BreadcrumbItem>Home</BreadcrumbItem>
+            <BreadcrumbItem>WorkShop</BreadcrumbItem>
+            <BreadcrumbItem>JS Plug-In</BreadcrumbItem>
+        </Breadcrumb>
+    </Breadcrumb>
+    <Content>
+        <span>本页面中可管理边缘计算模块的 JS 脚本单元，用以扩展计算功能。</span>
+    </Content>
+    <ChildContent>
+        <Card Title="Plug-In List">
+            <Extra>
+                <Button OnClick="OnRefresh" Type=" ButtonType.Primary">Refresh</Button>
+
+                <Button OnClick="OnRestart">Restart</Button>
+                @if (_restarting)
+                {
+                    <Spin/>
+                }
+            </Extra>
+
+            <Body>
+
+
+            <Button Type="@ButtonType.Dashed"
+                    Style="width: 100%; margin-bottom: 8px;"
+                    OnClick="AddJsFunc">
+                <Icon Type="plus" Theme="@IconThemeType.Outline" />
+                Add
+            </Button>
+
+            <AntList TItem="JsFuncDef"
+                     DataSource="_data"
+                     ItemLayout="ListItemLayout.Horizontal"
+                     Loading ="isLoading"
+            >
+                    <ListItem >
+                        <ListItemMeta  Avatar="@("./assets/js_brand.svg")" Description="@context.Description">
+                            <TitleTemplate>
+                            
+                                <Text>@context.FunctionName</Text>
+
+                            </TitleTemplate>
+                            
+                        </ListItemMeta>
+                        <div class="listContent1" style="width:120px;">
+                            <div class="listContentItem1">
+                                <span>Command</span>
+                                <p>@context.Cmd</p>
+                            </div>
+                        </div>
+                      
+                        <div class="listContent1" style="width:60px;">
+                            <div class="listContentItem1">
+                                <a href="/workshop/jsfunc/editor/@context.FunctionName">Edit</a>
+
+                               
+                            </div>
+                        </div>
+
+
+                        <div class="listContent1" style="width:60px;">
+                            <div class="listContentItem1">
+                                <Button OnClick="OnRefresh">Refresh</Button>
+
+
+                            </div>
+                        </div>
+
+                </ListItem>
+            </AntList>
+            </Body>
+        </Card>
+    </ChildContent>
+</PageContainer>
+
+
+<Modal Title="@("Add Function")"
+       Visible="@_visible"
+       OnOk="@OnAddHandleOk"
+       OnCancel="@OnAddHandleCancel"
+       ConfirmLoading="@_confirmLoading">
+
+
+    <Form Model="@_newModel"
+          Style="margin-top: 8px;"
+          TModel="Models.JsFunc.JsFuncDef">
+
+
+
+        <FormItem Label="Command Index" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+            <AntDesign.InputNumber Min="1" Max="9999" @bind-Value="@context.Cmd" />
+        </FormItem>
+        <FormItem Label="Name" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+            <AntDesign.Input Placeholder="" @bind-Value="@context.FunctionName" />
+        </FormItem>
+        <FormItem Label="Description" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+            <TextArea MinRows="4" @bind-Value="@context.Description"></TextArea>
+        </FormItem>
+
+    </Form>
+</Modal>
+
+
+@code{
+    private static readonly RenderFragment Edit = @<a key="edit" style="width:40px;">
+        
+    </a>;
+
+    private readonly RenderFragment[] _actions =
+    {
+        Edit
+    };
+
+
+    class FormItemLayout
+    {
+        public ColLayoutParam LabelCol { get; set; }
+        public ColLayoutParam WrapperCol { get; set; }
+    }
+
+    private readonly FormItemLayout _formItemLayout = new FormItemLayout
+    {
+        LabelCol = new ColLayoutParam
+        {
+            Xs = new EmbeddedProperty { Span = 24 },
+            Sm = new EmbeddedProperty { Span = 7 },
+        },
+
+        WrapperCol = new ColLayoutParam
+        {
+            Xs = new EmbeddedProperty { Span = 24 },
+            Sm = new EmbeddedProperty { Span = 12 },
+            Md = new EmbeddedProperty { Span = 10 },
+        }
+    };
+
+    private readonly FormItemLayout _submitFormLayout = new FormItemLayout
+    {
+        WrapperCol = new ColLayoutParam
+        {
+            Xs = new EmbeddedProperty { Span = 24, Offset = 0 },
+            Sm = new EmbeddedProperty { Span = 10, Offset = 7 },
+        }
+    };
+}

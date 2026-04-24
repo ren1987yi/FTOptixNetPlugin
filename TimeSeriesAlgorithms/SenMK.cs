@@ -56,7 +56,7 @@ namespace TimeSeriesAlgorithms
 
 
         // 计算 Mann-Kendall 检验的 S 值
-        public static int ComputeS(List<double> data)
+        private static int ComputeS(List<double> data)
         {
             int n = data.Count;
             int S = 0;
@@ -76,14 +76,14 @@ namespace TimeSeriesAlgorithms
         }
 
         // 计算 S 的方差
-        public static double ComputeVariance(List<double> data)
+        private static double ComputeVariance(List<double> data)
         {
             int n = data.Count;
             return n * (n - 1) * (2 * n + 5) / 18.0;
         }
 
         // 计算 Z 值
-        public static double ComputeZ(int S, double varS)
+        private static double ComputeZ(int S, double varS)
         {
             if (S > 0)
                 return (S - 1) / Math.Sqrt(varS);
@@ -94,7 +94,7 @@ namespace TimeSeriesAlgorithms
         }
 
         // 判定趋势显著性
-        public static TrendSign_TE TrendSignificance(double Z, double alpha = 0.05)
+        private static TrendSign_TE TrendSignificance(double Z, double alpha = 0.05)
         {
             // For a two-tailed test, divide alpha by 2
             double alphaHalf = alpha / 2;
@@ -118,7 +118,7 @@ namespace TimeSeriesAlgorithms
 
 
         // Calculates the Sen's Slope of a dataset
-        public static double CalculateSensSlope(List<double> data)
+        private static double CalculateSensSlope(List<double> data)
         {
             int n = data.Count;
             List<double> slopes = new List<double>();
@@ -146,8 +146,8 @@ namespace TimeSeriesAlgorithms
         }
 
 
-
-        public static double LinearFit(List<double> yData,double slop)
+        // 计算 Mann-Kendall 检验的 S 值
+        private static double LinearFit(List<double> yData,double slop)
         {
             int n  = yData.Count;
             

@@ -1,0 +1,100 @@
+[
+  {
+    "id": "trend-1",
+    "updatedAt": "2026-03-11T10:02:51Z",
+    "user": {
+      "name": "Anymouse",
+      "avatar": "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+    },
+    "group": {
+      "name": "Highly Compelling Design Team",
+      "link": "http://github.com/"
+    },
+    "project": {
+      "name": "June Version",
+      "link": "http://github.com/"
+    },
+    "template": "启动 ECC Server , port :44818 ,2222"
+  },
+  {
+    "id": "trend-2",
+    "updatedAt": "2026-03-11T10:06:35Z",
+    "user": {
+      "name": "192.168.1.101",
+      "avatar": "https://gw.alipayobjects.com/zos/rmsportal/cnrhVkzwxjPwAaCfPbdc.png"
+    },
+    "group": {
+      "name": "CIP",
+      "link": "http://github.com/"
+    },
+    "project": {
+      "name": "June Version",
+      "link": "http://github.com/"
+    },
+    "template": "PLC @{user} 已连接 EEC Server,协议： @{group}"
+  },
+  {
+    "id": "trend-3",
+    "updatedAt": "2026-03-11T10:05:14Z",
+    "user": {
+      "name": "192.168.1.101",
+      "avatar": "https://gw.alipayobjects.com/zos/rmsportal/gaOngJwsRYRaVAuXXcmB.png"
+    },
+    "group": {
+      "name": "Second Girls Group",
+      "link": "http://github.com/"
+    },
+    "project": {
+      "name": "June Version",
+      "link": "http://github.com/"
+    },
+    "template": "Call JS Function add paremter=args:1,1  returns:2"
+  },
+  {
+    "id": "trend-4",
+    "updatedAt": "2026-03-11T10:05:15Z",
+    "user": {
+      "name": "192.168.1.101",
+      "avatar": "https://gw.alipayobjects.com/zos/rmsportal/WhxKECPNujWoWEFNdnJE.png"
+    },
+    "project": {
+      "name": "Daily iteration in May",
+      "link": "http://github.com/"
+    },
+    "template": "Call JS Function add paremter=args:951,42  returns:993"
+  },
+  {
+    "id": "trend-5",
+    "updatedAt": "2026-03-11T10:05:16",
+    "user": {
+      "name": "192.168.1.101",
+      "avatar": "https://gw.alipayobjects.com/zos/rmsportal/ubnKSIfAJTxIgXOKlciN.png"
+    },
+    "project": {
+      "name": "Engineering Efficiency",
+      "link": "http://github.com/"
+    },
+    "comment": {
+      "name": "Leave a message",
+      "link": "http://github.com/"
+    },
+    "template": "Call Function TrendTest result=\"S : 4851 , Z : 14.662207 ,T : 1, Slop : 1.000000 , Intercept : -1.000000, Predict Value : 108.000000\""
+  },
+  {
+    "id": "trend-6",
+    "updatedAt": "2026-03-11T10:05:19Z",
+    "user": {
+      "name": "192.168.1.101",
+      "avatar": "https://gw.alipayobjects.com/zos/rmsportal/jZUIxmJycoymBprLOUbT.png"
+    },
+    "group": {
+      "name": "Programmers Daily",
+      "link": "http://github.com/"
+    },
+    "project": {
+      "name": "Brand Iteration",
+      "link": "http://github.com/"
+    },
+    "template": "Call Function log args=\"932 , 770 , 915 , 611.987366 , 547.404297 , 224.400406\""
+  }
+]

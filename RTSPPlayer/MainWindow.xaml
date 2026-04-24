@@ -1,0 +1,58 @@
+﻿<Window x:Class="RTSPPlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RTSPPlayer"
+        xmlns:ffme="clr-namespace:Unosquare.FFME;assembly=ffme.win"
+        mc:Ignorable="d"
+       Topmost="True"
+        
+        Visibility="{Binding WindowVisibility,Mode= TwoWay}"
+        Top="{Binding WindowTop,Mode=TwoWay}"
+        Left="{Binding WindowLeft,Mode=TwoWay}"
+        Title="{Binding WindowTitle}" 
+        Height="{Binding WindowHeight,Mode=TwoWay}"
+        Width="{Binding WindowWidth,Mode=TwoWay}"
+        MinWidth="100"
+        MinHeight="100"
+        ResizeMode="NoResize"
+        WindowStyle="None" AllowsTransparency="True"
+        Background="Black"
+        
+        >
+
+   
+    <Grid >
+        <Grid.RowDefinitions >
+            <RowDefinition Height="0"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" >
+                <Button Command="{Binding OpenCommand}">Play</Button>
+                <Button Click="Button_Click_1">Stop</Button>
+
+                
+             
+            </StackPanel>
+                
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{Binding Row1}"></RowDefinition>
+                <RowDefinition Height="{Binding Row2}"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{Binding Col1}"></ColumnDefinition>
+                <ColumnDefinition Width="{Binding Col2}"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+
+            <ffme:MediaElement  Margin="2" Stretch="Fill" Grid.Row="0" Grid.Column="0" x:Name="Media" Background="Transparent" LoadedBehavior="Manual" UnloadedBehavior="Close" IsMuted="True" />
+            <ffme:MediaElement Margin="2" Stretch="Fill" Grid.Row="0" Grid.Column="1" x:Name="Media1" Background="Transparent" LoadedBehavior="Manual" UnloadedBehavior="Close" IsMuted="True" />
+            <ffme:MediaElement Margin="2" Stretch="Fill" Grid.Row="1" Grid.Column="0" x:Name="Media2" Background="Transparent" LoadedBehavior="Manual" UnloadedBehavior="Close" IsMuted="True" />
+            <ffme:MediaElement Margin="2" Stretch="Fill" Grid.Row="1" Grid.Column="1" x:Name="Media3" Background="Transparent" LoadedBehavior="Manual" UnloadedBehavior="Close" IsMuted="True" />
+        </Grid>
+    </Grid>
+</Window>

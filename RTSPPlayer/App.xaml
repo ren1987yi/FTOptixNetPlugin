@@ -1,0 +1,10 @@
+﻿<Application x:Class="RTSPPlayer.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:RTSPPlayer"
+             ShutdownMode="OnExplicitShutdown"
+             >
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

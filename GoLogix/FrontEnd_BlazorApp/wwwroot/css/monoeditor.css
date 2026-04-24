@@ -1,0 +1,11 @@
+﻿/*#my-editor-id {*/ /* applies to a specific editor instance */
+    /*height: 100px;
+}*/
+
+.my-editor-class { /* applies to all editor instances with this class */
+    height: 600px;
+}
+
+/*.monaco-editor-container {*/ /* applies to all editor instances */
+    /*height: 100px;
+}*/

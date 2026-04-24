@@ -1,0 +1,217 @@
+﻿@namespace FrontEnd_BlazorApp.Pages.Dashboard.Workplace
+@using FrontEnd_BlazorApp.Pages.Dashboard.Analysis
+
+@using System.Text.RegularExpressions
+@page "/"
+@attribute [ReuseTabsPage(Pin = false, Closable = true)] 
+<PageContainer Title="Workplace">
+    <Breadcrumb>
+        <Breadcrumb>
+            <BreadcrumbItem>Home</BreadcrumbItem>
+            <BreadcrumbItem>Dashboard</BreadcrumbItem>
+            <BreadcrumbItem>Workplace</BreadcrumbItem>
+        </Breadcrumb>
+    </Breadcrumb>
+    <Content>
+        <div class="pageHeaderContent__b__0">
+            <div class="avatar">
+                <Avatar size="@AvatarSize.Large" src="assets/console.svg" />
+            </div>
+            <div class="content">
+                <div class="contentTitle">
+                    边缘计算容器 (Edge Computing Container)
+                </div>
+                <div>
+                    Edge Computing | Container Technology | Rockwell Automation
+                </div>
+            </div>
+        </div>
+    </Content>
+    <ExtraContent>
+        <div class="extraContent">
+            <div class="statItem">
+                <Statistic Title="@("模块数量")" Value="7" />
+            </div>
+            <div class="statItem">
+                <Statistic Title="@("主机名称")" Value="@_hostInfo.Name"/>
+            </div>
+             <div class="statItem">
+                <Statistic Title="@("操作系统")" Value="@_hostInfo.OS"/>
+            </div>
+            <div class="statItem">
+                <Statistic Title="@("CIP RPI")" Value="5" />
+            </div>
+        </div>
+    </ExtraContent>
+    <ChildContent>
+        <Row Gutter="24">
+            <AntDesign.Col Xl="16" Lg="24" Md="24" Sm="24" Xs="24">
+                <Card Class="projectList"
+                      Style="margin-bottom: 24px;"
+                      Title="系统内计算单元列表"
+                      BodyStyle="padding: 0px;">
+                    <Extra>
+                        <a href="/">All items</a>
+                    </Extra>
+                    <ChildContent>
+                        @foreach (var item in _projectNotice) {
+                            <CardGrid Hoverable>
+                                <Card BodyStyle="padding: 0px;" Bordered="false">
+                                    <CardMeta>
+                                        <TitleTemplate>
+                                            <div class="cardTitle">
+                                                <Avatar Size="@AvatarSize.Small" Src="@item.Logo"></Avatar>
+                                                <a href="@item.Href">@item.Title</a>
+                                            </div>
+                                        </TitleTemplate>
+                                        <DescriptionTemplate>
+                                            <!--todo: submit a pr to card component-->
+                                            <div class="ant-card-meta-description">
+                                                @item.Description
+                                            </div>
+                                        </DescriptionTemplate>
+                                    </CardMeta>
+                                    <div class="projectItemContent">
+                                        <a href="@item.MemberLink">@item.Member</a>
+                                        @if (!string.IsNullOrEmpty(item.UpdatedAt)) {
+                                            <span class="datetime" title="@item.UpdatedAt">
+
+                                            </span>
+                                        }
+                                    </div>
+                                </Card>
+                            </CardGrid>
+                        }
+                    </ChildContent>
+                </Card>
+
+                <Card BodyStyle="padding: 0px;"
+                      Class="activeCard"
+                      Title="系统日志">
+                    <AntList TItem="ActivitiesType"
+                             DataSource="@_activities"
+                             Class="activitiesList"
+                             Size="ListSize.Large"
+                             ItemLayout="ListItemLayout.Horizontal">
+                        <ListItem>
+                            <ListItemMeta Avatar="@context.User.Avatar" Description="@context.UpdatedAt.ToFriendlyDisplay()">
+                                <TitleTemplate>
+                                    <span>
+                                        @context.UpdatedAt
+                                    </span>
+                                    <span>
+                                        <a class="username">@context.User.Name</a>
+                                        &nbsp;
+                                        <span class="event">
+                                            @foreach (var str in Regex.Split(context.Template, @"@\{([^{}]*)\}")) {
+                                                if (str == "group") {
+                                                    <a href="@context.Group.Link" key="@context.Group.Name">
+                                                        @context.Group.Name
+                                                    </a>
+                                                }
+                                                else if (str == "project") {
+                                                    <a href="@context.Project.Link" key="@context.Project.Name">
+                                                        @context.Project.Name
+                                                    </a>
+                                                }
+                                                else if (str == "user")
+                                                {
+                                                    <a >
+                                                        @context.User.Name
+                                                    </a>
+                                                }
+                                                else {
+                                                    @str
+                                                }
+                                            }
+                                        </span>
+                                    </span>
+                                </TitleTemplate>
+                            </ListItemMeta>
+                        </ListItem>
+                    </AntList>
+                </Card>
+            </AntDesign.Col>
+            <AntDesign.Col Xl="8" Lg="24" Md="24" Sm="24" Xs="24">
+                <Card Style="margin-bottom: 24px;"
+                      Title="快速导航"
+                      BodyStyle="padding: 0px;">
+                    <EditableLinkGroup Links="_links" />
+
+
+                </Card>
+
+        
+
+                <Card Style="margin-bottom: 24px;"
+                      Title="性能">
+        
+                        <ChartCard Title="CPU Usaged"
+                                   Total="@($"{(int)_hostInfo.Cpu}%")"
+                                   ContentHeight="46">
+                            <ChildContent>
+                                <MiniProgress 
+                                    Percent="@((int)_hostInfo.Cpu)"
+                                    StrokeWidth="8" 
+                                    Target="80" 
+                                    Color="#c3ecfa" />
+                            </ChildContent>
+                            <Footer>
+                               
+                            </Footer>
+                        </ChartCard>
+                        <br />
+        
+                        <ChartCard Title="Memory Usaged"
+                                   Total="@($"{(int)_hostInfo.Mem}%")"
+                                   ContentHeight="46">
+                            <ChildContent>
+                                <MiniProgress 
+                                    Percent="@((int)_hostInfo.Mem)" 
+                                    StrokeWidth="8" 
+                                    Target="80" 
+                                    Color="#c9e1ff" />
+                            </ChildContent>
+                            <Footer>
+                               
+                            </Footer>
+                        </ChartCard>
+
+                           <br />
+        
+                        <ChartCard Title="Disk Usaged"
+                                   Total="@($"{(int)_hostInfo.Disk}%")"
+                                   ContentHeight="46">
+                            <ChildContent>
+                                <MiniProgress 
+                                    Percent="@((int)_hostInfo.Disk)"
+                                    StrokeWidth="8" 
+                                    Target="80" 
+                                    Color="#d8f4b5" />
+                            </ChildContent>
+                            <Footer>
+                               
+                            </Footer>
+                        </ChartCard>
+
+                </Card>
+
+                <Card BodyStyle="padding-top: 12px; padding-bottom: 12px;"
+                      Title="组件">
+                    <div class="members">
+                        <Row Gutter="48">
+                            @foreach (var item in _projectNotice) {
+                                <AntDesign.Col Span="12" Style="padding-left: 24px; padding-right: 24px;">
+                                    <a href="@item.Href">
+                                        <Avatar Src="@item.Logo" Size="@AvatarSize.Small" />
+                                        <span class="member">@item.Member</span>
+                                    </a>
+                                </AntDesign.Col>
+                            }
+                        </Row>
+                    </div>
+                </Card>
+            </AntDesign.Col>
+        </Row>
+    </ChildContent>
+</PageContainer>

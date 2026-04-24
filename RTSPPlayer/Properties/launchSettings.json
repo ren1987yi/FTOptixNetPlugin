@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RTSPPlayer": {
+      "commandName": "Project",
+      "commandLineArgs": "\"config1.json\""
+    }
+  }
+}

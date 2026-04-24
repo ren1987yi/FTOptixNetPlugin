@@ -1,0 +1,151 @@
+﻿@namespace FrontEnd_BlazorApp.Pages.Workshop.JsFunc
+
+@page "/workshop/jsfunc/editor/{id}"
+
+@implements IReuseTabsPage
+
+
+
+@inject ReuseTabsService ReuseTabsService
+
+
+
+<Card>
+    <TitleTemplate>
+        Editor Name:@Id
+    </TitleTemplate>
+    <Extra>
+
+        <Button OnClick="OnSave" Type="ButtonType.Primary">Save</Button>
+
+
+        <Button OnClick="OnClose" Type="@ButtonType.Dashed" Danger>Close</Button>
+
+    </Extra>
+    <Body>
+
+        <Form Model="@_curFunc"
+              Style="margin-top: 8px;"
+              TModel="Models.JsFunc.JsFuncDef">
+
+
+
+            <FormItem Label="Command Index" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <AntDesign.InputNumber Min="1" Max="9999" @bind-Value="@context.Cmd" />
+            </FormItem>
+            <FormItem Label="Name" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <AntDesign.Input Placeholder="" @bind-Value="@context.FunctionName" />
+            </FormItem>
+            <FormItem Label="Description" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <TextArea MinRows="4" @bind-Value="@context.Description"></TextArea>
+            </FormItem>
+
+        </Form>
+    </Body>
+</Card>
+
+<br />
+
+<GridRow Gutter="16">
+    <GridCol Span="12">
+        <Card>
+            <TitleTemplate>
+                <Icon Type="credit-card" /> Input Arguments
+            </TitleTemplate>
+            <Extra>
+                <Button Type="@ButtonType.Dashed" OnClick="() => AddOrUpdateArgument(true, true,0)">Add</Button>
+            </Extra>
+            <Body>
+                <Table Style="margin-bottom: 24px;"
+                       DataSource="@_curFunc.Arguments"
+                       HidePagination>
+                    <AntDesign.Column Title="Index" @bind-Field="@context.Index" />
+                    <AntDesign.Column Title="Name" @bind-Field="@context.Name" />
+                    <AntDesign.Column Title="DataType" @bind-Field="@context.DataType" />
+                    <ActionColumn>
+                        <Button OnClick="() => AddOrUpdateArgument(false, true, context.Index)">Edit</Button>
+                        <Button Danger Type="@ButtonType.Dashed" OnClick="()=>DelArgument_Input(context.Index)">Delete</Button>
+                    </ActionColumn>
+                </Table>
+            </Body>
+
+        </Card>
+    </GridCol>
+    <GridCol Span="12">
+        <Card>
+            <TitleTemplate>
+                <Icon Type="credit-card" /> Return Arguments
+            </TitleTemplate>
+            <Extra>
+                <Button Type="@ButtonType.Dashed" OnClick="() => AddOrUpdateArgument(true, false,0)">Add</Button>
+            </Extra>
+            <Body>
+                <Table Style="margin-bottom: 24px;"
+                       DataSource="@_curFunc.Returns"
+                       HidePagination>
+                    <AntDesign.Column Title="Index" @bind-Field="@context.Index" />
+
+                    <AntDesign.Column Title="DataType" @bind-Field="@context.DataType" />
+                    <ActionColumn Title="Action">
+                        <Button OnClick="()=>AddOrUpdateArgument(false,false,context.Index)">Edit</Button>
+                        <Button Danger Type="@ButtonType.Dashed" OnClick="() => DelArgument_Return(context.Index)">Delete</Button>
+                    </ActionColumn>
+                </Table>
+            </Body>
+        </Card>
+    </GridCol>
+</GridRow>
+
+<br />
+
+<StandaloneCodeEditor Id="my-code-editor" ConstructionOptions="EditorConstructionOptions" CssClass="my-editor-class" @ref="_editor" />
+
+
+
+
+<Modal Title="@_title"
+       Visible="@_visible"
+       OnOk="@OnHandleOk"
+       OnCancel="@OnHandleCancel"
+       ConfirmLoading="@_confirmLoading">
+
+
+    <Form Model="@_tmpArg"
+          Style="margin-top: 8px;"
+          TModel="Models.JsFunc.ArgumentDef">
+
+
+
+        <FormItem Label="Index" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+            <AntDesign.InputNumber Min="0" Max="99" @bind-Value="@context.Index" />
+        </FormItem>
+        <FormItem Label="Name" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+            <AntDesign.Input Placeholder="" @bind-Value="@context.Name" />
+        </FormItem>
+        <FormItem Label="DataType" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+           
+            <SimpleSelect DefaultValue="dint" Style="width:120px;" @bind-Value="@context.DataType">
+                <SelectOptions>
+                    <SimpleSelectOption Value="dint" Label="DINT"></SimpleSelectOption>
+                    <SimpleSelectOption Value="real" Label="REAL"></SimpleSelectOption>
+                    
+                </SelectOptions>
+            </SimpleSelect>
+
+        </FormItem>
+
+    </Form>
+</Modal>
+
+
+
+
+
+@code {
+    public RenderFragment GetPageTitle()
+    {
+        return@<span>Function Name: @Id </span>;
+    }
+
+}
+

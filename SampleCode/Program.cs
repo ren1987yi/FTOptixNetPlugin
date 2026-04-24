@@ -22,14 +22,51 @@ using NetProtainerApi;
 using SampleCode.WebSocketTest;
 using System.Net;
 #endif
-
+using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Management;
 namespace SampleCode
 {
     internal class Program
     {
         static async Task Main(string[] args)
         {
+
+
             Console.WriteLine("Hello, World!");
+
+            try
+            {
+                // 创建 PerformanceCounter 实例
+                PerformanceCounter cpuCounter = new PerformanceCounter(
+                    "Processor",        // 性能类别
+                    "% Processor Time", // 计数器名称
+                    "0",           // 实例名称（_Total 表示所有 CPU 核心的总和）
+                    true                // 只读
+                );
+
+                Console.WriteLine("正在读取 CPU 使用率...");
+
+                // 第一次读取通常是 0，需要等待一段时间
+                cpuCounter.NextValue();
+                Thread.Sleep(1000);
+
+                while (true)
+                {
+                    float cpuUsage = cpuCounter.NextValue();
+                    Console.WriteLine($"CPU 使用率: {cpuUsage:F2}%");
+                    Thread.Sleep(1000);
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("权限不足，请以管理员身份运行程序。");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"发生错误: {ex.Message}");
+            }
 
 #if IPP
             Test_IPP();

@@ -1,0 +1,15 @@
+{
+  "StartupShow": true,
+  "Port": 49004,
+  "X": 1280,
+  "Y": 870,
+  "Width": 1280,
+  "Height": 700,
+  "Urls": [
+    "rtsp://admin:p-861100228@192.168.1.244:554/Streaming/Channels/102",
+    "rtsp://admin:p-861100228@192.168.1.244:554/Streaming/Channels/102",
+    "rtsp://admin:p-861100228@192.168.1.244:554/Streaming/Channels/102",
+    "rtsp://admin:p-861100228@192.168.1.244:554/Streaming/Channels/102"
+  ],
+  "StartupLayout": 0
+}

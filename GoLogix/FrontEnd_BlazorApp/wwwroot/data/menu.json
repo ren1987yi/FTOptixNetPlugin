@@ -1,0 +1,45 @@
+﻿[
+  {
+    "path": "/dashboard",
+    "name": "监控面板",
+    "key": "dashboard",
+    "icon": "dashboard",
+    "children": [
+      {
+        "path": "/",
+        "name": "工作台",
+        "key": "dashboard.workplace"
+      }
+    ]
+  },
+
+  {
+    "path": "/workshop",
+    "name": "计算模组",
+    "key": "workshop",
+    "icon": "table",
+    "children": [
+      {
+        "path": "/workshop/jsfunc",
+        "name": "JS模块",
+        "key": "workshop.js"
+      }
+
+    ]
+  },
+  {
+    "path": "/settings",
+    "name": "设定",
+    "key": "settings",
+    "icon": "profile",
+    "children": [
+      {
+        "path": "/settings/general",
+        "name": "常规",
+        "key": "settings.general"
+      }
+
+    ]
+  }
+
+]

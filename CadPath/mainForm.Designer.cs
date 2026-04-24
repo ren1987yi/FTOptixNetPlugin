@@ -44,12 +44,15 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnSortLine = new Button();
             dvPoints = new DataGridView();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
             btnDownload = new Button();
+            btnExport = new Button();
             btnZoomOut = new Button();
             btnZoomIn = new Button();
             cadView = new PictureBox();
+            M1 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            M2 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -117,6 +120,7 @@
             tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 1, 4);
             tableLayoutPanel1.Controls.Add(dvPoints, 0, 6);
             tableLayoutPanel1.Controls.Add(btnDownload, 1, 7);
+            tableLayoutPanel1.Controls.Add(btnExport, 0, 7);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -222,27 +226,13 @@
             // dvPoints
             // 
             dvPoints.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dvPoints.Columns.AddRange(new DataGridViewColumn[] { Column4, Column5 });
+            dvPoints.Columns.AddRange(new DataGridViewColumn[] { M1, Column4, M2, Column5 });
             tableLayoutPanel1.SetColumnSpan(dvPoints, 2);
             dvPoints.Dock = DockStyle.Fill;
             dvPoints.Location = new Point(3, 441);
             dvPoints.Name = "dvPoints";
             dvPoints.Size = new Size(415, 252);
             dvPoints.TabIndex = 7;
-            // 
-            // Column4
-            // 
-            Column4.DataPropertyName = "X";
-            Column4.HeaderText = "X";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            // 
-            // Column5
-            // 
-            Column5.DataPropertyName = "Y";
-            Column5.HeaderText = "Y";
-            Column5.Name = "Column5";
-            Column5.ReadOnly = true;
             // 
             // btnDownload
             // 
@@ -253,6 +243,16 @@
             btnDownload.Text = "Download";
             btnDownload.UseVisualStyleBackColor = true;
             btnDownload.Click += btnDownload_Click;
+            // 
+            // btnExport
+            // 
+            btnExport.Location = new Point(3, 699);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new Size(75, 23);
+            btnExport.TabIndex = 9;
+            btnExport.Text = "Excel";
+            btnExport.UseVisualStyleBackColor = true;
+            btnExport.Click += btnExport_Click;
             // 
             // btnZoomOut
             // 
@@ -284,6 +284,32 @@
             cadView.TabStop = false;
             cadView.Paint += cadView_OnPaint;
             cadView.Resize += cadView_Resize;
+            // 
+            // M1
+            // 
+            M1.DataPropertyName = "M1";
+            M1.HeaderText = "M";
+            M1.Name = "M1";
+            // 
+            // Column4
+            // 
+            Column4.DataPropertyName = "X";
+            Column4.HeaderText = "X";
+            Column4.Name = "Column4";
+            Column4.ReadOnly = true;
+            // 
+            // M2
+            // 
+            M2.DataPropertyName = "M2";
+            M2.HeaderText = "M";
+            M2.Name = "M2";
+            // 
+            // Column5
+            // 
+            Column5.DataPropertyName = "Y";
+            Column5.HeaderText = "Y";
+            Column5.Name = "Column5";
+            Column5.ReadOnly = true;
             // 
             // mainForm
             // 
@@ -330,11 +356,14 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Button btnSortLine;
         private DataGridView dvPoints;
-        private DataGridViewTextBoxColumn Column4;
-        private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewTextBoxColumn Column3;
         private Button btnDownload;
+        private Button btnExport;
+        private DataGridViewTextBoxColumn M1;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn M2;
+        private DataGridViewTextBoxColumn Column5;
     }
 }

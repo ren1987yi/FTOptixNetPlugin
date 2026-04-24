@@ -119,7 +119,7 @@ namespace FTOptixNetPlugin.Extensions
             return line;
         }
 
-        public static PolyLine AddPolyline(IUANode parent,IEnumerable<Vector2> points,Color lineColor ,Color fillColor , string name = null)
+        public static PolyLine AddPolyline(IUANode parent,IEnumerable<Vector2> points,Color lineColor ,Color fillColor , string name = null,int boardsize=1)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -127,7 +127,7 @@ namespace FTOptixNetPlugin.Extensions
             }
 
             var line = InformationModel.MakeObject<PolyLine>(name);
-
+            line.LineThickness = boardsize;
             var bbox = new BBox();
             foreach (var p in points)
             {

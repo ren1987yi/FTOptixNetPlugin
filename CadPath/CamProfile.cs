@@ -15,6 +15,8 @@ namespace CadPath
 
     public class CamPoint
     {
+        public float M1 { get; set; }
+        public float M2 { get; set; }
         public float X { get; set; }
         public float Y { get; set; }
     }

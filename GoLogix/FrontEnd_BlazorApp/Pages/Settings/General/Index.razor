@@ -1,0 +1,79 @@
+﻿@namespace FrontEnd_BlazorApp.Pages.Settings.General
+@page "/settings/general"
+
+
+@inject IGoLogixService goLogixService
+@inject IConfiguration configuration;
+
+<PageContainer Title="常规">
+    <Breadcrumb>
+        <Breadcrumb>
+            <BreadcrumbItem>Home</BreadcrumbItem>
+            <BreadcrumbItem>Settings</BreadcrumbItem>
+            <BreadcrumbItem>General</BreadcrumbItem>
+        </Breadcrumb>
+    </Breadcrumb>
+    <Content>
+        <span>服务器常规设置</span>
+    </Content>
+    <ChildContent>
+        <Card >
+            <TitleTemplate>
+                
+            </TitleTemplate>
+            <Extra>
+             <Button Type="ButtonType.Primary">Save</Button>
+            </Extra>
+
+            <Body>
+
+                <Text>主站服务器地址</Text>
+                <AntDesign.Input Disabled @bind-Value="_webhost" />
+            
+                <br />
+                <br />
+                <div>
+                    <Text>自动刷新</Text>
+                </div>
+                <Switch />
+
+                <br />
+                <br />
+                <div>
+                    <Text>刷新频率</Text>
+                </div>
+                <AntDesign.InputNumber Min="1" Max="100"  @bind-Value="_refreshPeriod" />
+
+                <br />
+                <br />
+                
+                <Text>序列号</Text>
+                <AntDesign.Input @bind-Value="_serialNumber" />
+
+                <br />
+                <br />
+
+                <Text>授权码</Text>
+                <AntDesign.Input @bind-Value="_license" />
+
+            </Body>
+        </Card>
+    </ChildContent>
+</PageContainer>
+
+
+@code {
+    string _webhost;
+    int _refreshPeriod = 5;
+    string _serialNumber = "F0E4C2F76C58916EC258F246851BEA091D14D4247A2FC3E18694461B1816E13B";
+    string _license = "c5437b2d-2888-44a8-89ce-c3080c1314f9";
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        _webhost = configuration.GetValue<string>("ServerConfigure:GoLogix:Url",string.Empty);
+    }
+
+
+
+}

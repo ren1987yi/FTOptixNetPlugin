@@ -50,13 +50,25 @@ namespace CadPath
 
         }
 
-
+        private double getDegAngle2d(Vector2 v1, Vector2 v2)
+        {
+            double theta = Math.Atan2(v2.Y, v2.X) - Math.Atan2(v1.Y, v1.X);
+            if (theta > Math.PI)
+            {
+                theta -= 2 * Math.PI;
+            }
+            if (theta < -Math.PI)
+            {
+                theta += 2 * Math.PI;
+            }
+            return theta* 180 / Math.PI;
+        }
         private void sortLines()
         {
             sortTexts.Clear();
 
-            var startPoint = Vector2.Zero;
-
+            var startPoint = new Vector2(float.MinValue,float.MinValue);
+            var lastDir = Vector2.Zero;
 
             foreach (var p in _paths)
             {
@@ -66,7 +78,7 @@ namespace CadPath
                 }
             }
 
-            var paths = _paths.OrderBy(c => c.Index).ToList();
+            var paths = _paths.Where(p=>p.Count > 0).OrderBy(c => c.Index).ToList();
 
             var segIndex = 0;
             foreach (var path in paths.OrderBy(c => c.Index))
@@ -78,17 +90,127 @@ namespace CadPath
                     var c1 = path.Segments.Where(s => s.Index <= 0).Count();
                     foreach (var segment in path.Segments.Where(s => s.Index <= 0))
                     {
+                        if(startPoint.X == float.MinValue && startPoint.Y == float.MinValue)
+                        {
+                            startPoint = segment.Points.First();
+                        }
+
+
+                        var b_Zheng = false;
+                        var b_Fan = false;
+
+                        b_Zheng = (segment.Points.First() - startPoint).Length() <= min_distance;
+                        b_Fan = (segment.Points.Last() - startPoint).Length() <= min_distance;
+
+                        if (lastDir == Vector2.Zero)
+                        {
+
+                            var pp2 = segment.Points.Last();
+                            var pp1 = segment.Points[segment.Points.Count - 2];
+
+                            lastDir = (pp2 - pp1);
+
+                            startPoint = segment.Points.Last();
+                        }
+                        else
+                        {
+                            if (b_Zheng)
+                            {
+                                var pp2 = segment.Points[1];
+                                var pp1 = segment.Points[0];
+                                var nowDir = pp2 - pp1;
+
+                                var angle = Math.Abs(getDegAngle2d(lastDir, nowDir));
+                                if(angle > 90f)
+                                {
+                                    b_Zheng = false;
+                                }
+                            }
+
+
+                            if (b_Fan)
+                            {
+                                segment.Points.Reverse();
+                                var pp2 = segment.Points[1];
+                                var pp1 = segment.Points[0];
+                                var nowDir = pp2 - pp1;
+
+                                var angle = Math.Abs(getDegAngle2d(lastDir, nowDir));
+                                if( angle > 90f)
+                                {
+                                    b_Fan = false;
+                                }
+
+                                segment.Points.Reverse();
+                            }
+                        }
+
+                        if(b_Zheng && b_Fan)
+                        {
+                            //segment.Index = segIndex;
+                        }
+                        else if (b_Zheng)
+                        {
+                            //segment.Index = segIndex;
+                        }
+                        else if (b_Fan)
+                        {
+                            
+                            segment.Points.Reverse();
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        segment.Index = segIndex;
+                        var iii = 1;
+                        foreach (var p in segment.Points)
+                        {
+                            var dt = new DrawTextData()
+                            {
+                                Text = segIndex.ToString() + $"_{iii++}",
+                                Location = p
+                            };
+                            sortTexts.Add(dt);
+
+                        }
+                        startPoint = segment.Points.Last();
+                        break;
+
+
+
+                        /*
                         if ((segment.Points.First() - startPoint).Length() <= min_distance)
                         {
                             segment.Index = segIndex;
-                            startPoint = segment.Points.Last();
 
 
+                            if (lastDir == Vector2.Zero)
+                            {
+
+                                var pp2 = segment.Points.Last();
+                                var pp1 = segment.Points[segment.Points.Count - 2];
+
+                                lastDir = (pp2 - pp1);
+
+                                startPoint = segment.Points.Last();
+                            }
+                            else
+                            {
+                                var pp2 = segment.Points[1];
+                                var pp1 = segment.Points[0];
+                                var nowDir = pp2 - pp1;
+
+                                var angle = getDegAngle2d(lastDir, nowDir);
+
+                            }
+
+                            var iii = 1;
                             foreach (var p in segment.Points)
                             {
                                 var dt = new DrawTextData()
                                 {
-                                    Text = segIndex.ToString(),
+                                    Text = segIndex.ToString() + $"_{iii++}",
                                     Location = p
                                 };
                                 sortTexts.Add(dt);
@@ -101,12 +223,12 @@ namespace CadPath
                             segment.Index = segIndex;
                             segment.Points.Reverse();
                             startPoint = segment.Points.Last();
-
+                            var iii = 1;
                             foreach (var p in segment.Points)
                             {
                                 var dt = new DrawTextData()
                                 {
-                                    Text = segIndex.ToString(),
+                                    Text = segIndex.ToString() + $"_{iii++}",
                                     Location = p
                                 };
                                 sortTexts.Add(dt);
@@ -119,6 +241,9 @@ namespace CadPath
                             //throw new Exception("µã¶Ï¿ªÁË");
                             continue;
                         }
+
+
+                        */
                     }
                     var c2 = path.Segments.Where(s => s.Index <= 0).Count();
                     if (c1 == c2)
@@ -159,7 +284,33 @@ namespace CadPath
                     }
                 }
             }
-            cam.Points = camPoints.Select(p => new CamPoint() { X = p.X, Y = p.Y }).ToList();
+
+
+
+            var masterLen = 0.0f;
+            cam.Points = new List<CamPoint>();
+            for(var i = 0; i < camPoints.Count; i++)
+            {
+                if (i == 0)
+                {
+                    startPoint = camPoints[i];
+                    var p = new CamPoint() { X = startPoint.X, Y = startPoint.Y ,M1 = 0.0f,M2 = 0.0f};
+                    cam.Points.Add(p);
+                }
+                else
+                {
+                    masterLen += (camPoints[i] - startPoint).Length();
+                    var p = new CamPoint() { X = camPoints[i].X, Y = camPoints[i].Y, M1 = masterLen, M2 = masterLen };
+                    startPoint = camPoints[i];
+                    cam.Points.Add(p);
+                }
+            }
+
+            //cam.Points = camPoints.Select(p => new CamPoint() { X = p.X, Y = p.Y }).ToList();
+            
+            
+            
+            
             dvPoints.DataSource = null;
             dvPoints.DataSource = cam.Points;
             curCam = cam;
@@ -370,14 +521,30 @@ namespace CadPath
 
         private void convertToSvg(CadDocument dwg)
         {
-            var helper = new SvgHelper();
-            helper.FromDwg(dwg);
+            //var helper = new SvgHelper();
+            //helper.FromDwg(dwg);
         }
 
         private void btnDownload_Click(object sender, EventArgs e)
         {
             var dlg = new DlgDownload(this.curCam);
             dlg.ShowDialog();
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            var lines = new List<string>();
+
+            lines.Add("M,X,M,Y");
+            foreach (var c in curCam.Points)
+            {
+                lines.Add($"{c.M2:f6},{c.X:f6},{c.M1:f6},{c.Y:f6}");
+            }
+
+            var txt = string.Join("\n", lines.ToArray());
+
+            File.WriteAllText("camfile.csv", txt);
+
         }
     }
 }
