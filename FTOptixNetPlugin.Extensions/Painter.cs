@@ -158,7 +158,7 @@ namespace FTOptixNetPlugin.Extensions
 
 
             line.Path = string.Join(" ", paths);
-            Log.Info(MethodBase.GetCurrentMethod().Name, line.Path);
+            //Log.Info(MethodBase.GetCurrentMethod().Name, line.Path);
 
             line.LineThickness = 1;
             line.LineColor = lineColor;
