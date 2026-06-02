@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CaptureScreen": {
+      "commandName": "Project",
+      "commandLineArgs": "-x 200 -y 300 -w 1024 -h 768 -o \"D:\\testdata\\a.png\""
+    }
+  }
+}

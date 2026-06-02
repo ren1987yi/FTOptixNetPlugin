@@ -9,7 +9,11 @@ namespace CaptureScreen
 
         public class Options
         {
+            [Option('x', "sx", Required = false,Default =0, HelpText = "Screen start x location")]
+            public int X { get; set; }
 
+            [Option('y', "sy", Required = false, Default =0, HelpText = "Screen start y location")]
+            public int Y { get; set; }
 
             [Option('w', "width", Required = true, HelpText = "Screen width .")]
             public int Width { get; set; }
@@ -29,6 +33,8 @@ namespace CaptureScreen
             Parser.Default.ParseArguments<Options>(args)
 .WithParsed<Options>(opts =>
 {
+    Console.WriteLine($"X: {opts.X}");
+    Console.WriteLine($"Y: {opts.Y}");
     Console.WriteLine($"Width: {opts.Width}");
     Console.WriteLine($"Height: {opts.Height}");
     Console.WriteLine($"Output: {opts.Output}");
@@ -37,7 +43,7 @@ namespace CaptureScreen
     using var bitmap = new Bitmap(opts.Width, opts.Height);
     using (var g = Graphics.FromImage(bitmap))
     {
-        g.CopyFromScreen(0, 0, 0, 0,
+        g.CopyFromScreen(opts.X, opts.Y, 0, 0,
         bitmap.Size, CopyPixelOperation.SourceCopy);
     }
     bitmap.Save(opts.Output, ImageFormat.Png);

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/xspreadsheet.css">
+    <link rel="stylesheet" href="/css/sheet_test.css">
+    <script src="/js/xspreadsheet.js"></script>
+   
+    <!-- <script src="js/utils.js"></script> -->
+
+</head>
+
+<body>
+    <div class="console">
+
+        <div class="tools">
+            
+            <button id="btnPushData">保存</button>
+            <button id="btnGetData">刷新</button>
+         
+        </div>
+    </div>
+    
+    <div id="x-spreadsheet-demo"></div>
+    
+    
+    
+    <script  type="module">
+        import * as XSheet from "/js/sheet_index.js"
+
+        var sheet = undefined;
+        var filename = "";
+        window.onload = async ()=>{
+            sheet = await XSheet.Init();
+
+            const params = new URLSearchParams(window.location.search);
+            filename = params.get('f');
+
+
+        }
+
+        async function onLoadData(){
+            await XSheet.onLoadData(sheet,filename);
+        }
+
+        async function onSaveData(){
+            await XSheet.onSaveData(sheet,filename);
+
+            alert("保存完成");
+        }
+
+
+        document.getElementById('btnGetData').addEventListener('click',onLoadData);
+        document.getElementById('btnPushData').addEventListener('click',onSaveData);
+
+    </script>
+</body>
+
+</html>

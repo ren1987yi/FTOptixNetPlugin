@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Editor</title>
+
+    <link rel="stylesheet" href="/codemirror/lib/codemirror.css">
+    <script src="/codemirror/lib/codemirror.js"></script>
+    <script src="/codemirror/addon/selection/active-line.js"></script>
+    <script src="/codemirror/mode/xml/xml.js"></script>
+    <script src="/codemirror/mode/javascript/javascript.js"></script>
+
+    <link rel="stylesheet" href="/codemirror/addon/scroll/simplescrollbars.css">
+    <script src="/codemirror/addon/scroll/simplescrollbars.js"></script>
+    <link rel="stylesheet" href="/css/codeeditor.css">
+   
+</head>
+
+<body>
+    <div class="toolbar">
+        <div class="right-box">
+
+            <button onclick="load()">Load</button>
+            <button onclick="save()">Save</button>
+          
+        </div>
+    </div>
+    <article>
+        <form>
+
+            <textarea id="code" name="code"></textarea>
+        </form>
+    </article>
+    <script src="/js/utils.js"></script>
+    <script src="/js/codeeditor.js"></script>
+
+</body>
+
+</html>

@@ -1,7 +1,9 @@
 ﻿#define WEBSOCKET11
 #define PROCESS_REPLAY11
 #define SCRIBAN11
-#define DXF
+#define DXF11
+#define INTER_WEBSERVER
+
 
 #if WEBSOCKET
 using FTOptixNetPlugin.NetServer;
@@ -29,6 +31,9 @@ using NLog.Targets;
 using Process.PIDLoader;
 using System.Diagnostics;
 #endif
+
+using DotNetWebServer;
+using InternalWebService;
 
 namespace SampleCode2
 {
@@ -218,7 +223,25 @@ namespace SampleCode2
 #endif
 
 
+#if INTER_WEBSERVER
 
+            var folder = InternalWebService.AppData.Instance.WebRoot;
+
+
+            var app = new WebApplication(System.Net.IPAddress.Any,49002,string.Empty,folder,TimeSpan.FromSeconds(30));
+
+            var cfg = new InternalWebService.Configuration()
+            {
+                UploadFileFolder = "uploadfiles"
+            };
+            app.AddInternalServer(cfg);
+
+            
+            app.Start();
+
+            Console.ReadLine();
+
+#endif
 
 
 

@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <Title>InternalWebService</Title>
+	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+	  <Authors>Renyi</Authors>
+	  <Company></Company>
+	  <Product />
+	  <Description></Description>
+	  <PackageProjectUrl></PackageProjectUrl>
+	  <PackageTags>FTOptix;.Net;WebService</PackageTags>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <RepositoryUrl>https://github.com/ren1987yi/FTOptixNetPlugin.git</RepositoryUrl>
+	  <Version>0.0.0.2-beta</Version>
+  </PropertyGroup>
+
+
+
+	<ItemGroup>
+		<Content Include="InternalWebServiceContent\**" copyToOutput="true" CopyToOutputDirectory="Always">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\InternalWebServiceContent;content</PackagePath>
+			<IncludeInPackage>true</IncludeInPackage>
+			<CopyToOutput>true</CopyToOutput>
+			<BuildAction>Content</BuildAction>
+			<copyToOutput>true</copyToOutput>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</Content>
+	</ItemGroup>
+
+	
+
+  <ItemGroup>
+	  <PackageReference Include="ExcelDataReader" Version="3.8.0" >
+		  <PrivateAssets>all</PrivateAssets>
+	  </PackageReference>
+	  <PackageReference Include="ExcelDataReader.DataSet" Version="3.8.0" >
+		  <PrivateAssets>all</PrivateAssets>
+	  </PackageReference>
+	  <PackageReference Include="DotNetWebServer" Version="0.0.1.2" >
+		  <PrivateAssets>all</PrivateAssets>
+	  </PackageReference>
+	  <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="8.0.27" >
+
+	  </PackageReference>
+	  <PackageReference Include="Microsoft.Net.Http.Headers" Version="8.0.27" >
+
+	  </PackageReference>
+  </ItemGroup>
+
+  
+
+</Project>

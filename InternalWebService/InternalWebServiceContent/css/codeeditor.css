@@ -1,0 +1,83 @@
+.CodeMirror {
+  border: 1px solid black;
+  padding: 0px;
+}
+
+@font-face {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local("Source Sans Pro"),
+    local("SourceSansPro-Regular"),
+    url(source_sans.woff) format("woff");
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+section,
+article {
+  display: block;
+  padding: 0;
+}
+
+body {
+  background: #f8f8f8;
+  font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+article {
+  max-width: 100%;
+  margin: 0 0 0 0px;
+  /* border-left: 2px solid #E30808; */
+  /* border-right: 1px solid #ddd; */
+  padding: 0px 0px 0px 0px;
+  background: white;
+  z-index: 2;
+  position: relative;
+  min-height: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+
+form {
+  display: block;
+  margin-top: 0em;
+  unicode-bidi: isolate;
+  padding: 2px;
+}
+
+.toolbar {
+  padding: 2px;
+
+  position: absolute;
+  margin-top: 0px;
+  
+  display: flex;
+  justify-content: flex-end;
+  z-index: 9999;
+  width: 100%;
+}
+
+
+.right-box{
+  padding-right: 8px;
+  margin-left: auto;
+  margin-right:24px;
+}
+
+/* textarea{
+   position: absolute; 
+  
+  margin: 10px; 
+  left: 5px;
+  width: calc(100%-10px);
+  padding: 6px;
+} */

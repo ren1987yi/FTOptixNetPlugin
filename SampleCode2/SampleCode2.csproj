@@ -8,12 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotNetWebServer" Version="0.0.1.2" />
     <PackageReference Include="Scriban" Version="6.5.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FTOptixNetPlugin.DatabaseMaintenance\FTOptixNetPlugin.DatabaseMaintenance.csproj" />
     <ProjectReference Include="..\FTOptixNetPlugin.NetServer\FTOptixNetPlugin.NetServer.csproj" />
+    <ProjectReference Include="..\InternalWebService\InternalWebService.csproj" />
     <ProjectReference Include="..\Process.PIDLoader\Process.PIDLoader.csproj" />
     <ProjectReference Include="..\ProcessReply\ProcessReply.csproj" />
   </ItemGroup>

@@ -66,6 +66,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopAuto", "DesktopAuto\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptureScreen", "CaptureScreen\CaptureScreen.csproj", "{B0746458-96FA-4071-A7AD-47632D4DF380}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalWebService", "InternalWebService\InternalWebService.csproj", "{B84C7448-701C-458B-9A84-F6968D22D653}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -298,6 +300,14 @@ Global
 		{B0746458-96FA-4071-A7AD-47632D4DF380}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B0746458-96FA-4071-A7AD-47632D4DF380}.Release|x64.ActiveCfg = Release|Any CPU
 		{B0746458-96FA-4071-A7AD-47632D4DF380}.Release|x64.Build.0 = Release|Any CPU
+		{B84C7448-701C-458B-9A84-F6968D22D653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B84C7448-701C-458B-9A84-F6968D22D653}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B84C7448-701C-458B-9A84-F6968D22D653}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B84C7448-701C-458B-9A84-F6968D22D653}.Debug|x64.Build.0 = Debug|Any CPU
+		{B84C7448-701C-458B-9A84-F6968D22D653}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B84C7448-701C-458B-9A84-F6968D22D653}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B84C7448-701C-458B-9A84-F6968D22D653}.Release|x64.ActiveCfg = Release|Any CPU
+		{B84C7448-701C-458B-9A84-F6968D22D653}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

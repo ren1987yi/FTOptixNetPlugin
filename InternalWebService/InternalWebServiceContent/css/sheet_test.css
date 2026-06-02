@@ -1,0 +1,45 @@
+/* #x-spreadsheet-demo {
+    width: 100vh;
+    height: 100vh;
+} */
+
+html,body{
+    overflow: hidden;
+}
+/* 
+
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: -webkit-flex;
+    display: flex   ;
+    flex-direction: column;
+
+}
+
+.console{
+    height: 40px;
+    width: 100%;
+    display: inline-flex;
+}
+
+
+.sheet{
+    display: inline-flex;
+}
+ */
+
+ .console{
+    display: block;
+    position: absolute;
+    top: 0px;
+    right:0px;
+ }
+
+.tools{
+    display: flex;
+    justify-content: flex-end ;
+    flex-flow: row;
+    
+}
+
