@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" 
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+
+<title>WebGL 统一渲染：线条 + 图形 + 文字</title>
+<link rel="stylesheet" lang="en" type="text/css" href="style.css">
+</head>
+<body>
+
+<div class="console">
+      <button onclick="clearAll()">Clear All</button>
+</div>
+
+<canvas id="glcanvas"></canvas>
+
+<script>
+      function clearAll() {
+            window.clearAllActive();
+            window.clearHighlights();
+      }
+</script>
+
+
+<script src="pidweb.js"></script>
+</body>
+</html>

@@ -17,8 +17,12 @@ namespace InternalWebService
 
         public LocalStorage LocalStorage { get; private set; } = new LocalStorage();
 
+        public ControlActionDelegateManager ControlActionDelegateManager { get; private set; } = new ControlActionDelegateManager();
+
 
         public Configuration Configuration { get; set; }
+
+
 
         public AppData()
         {

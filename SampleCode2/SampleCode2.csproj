@@ -13,8 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ProcessToolkits\AutomationBooster.Dto\AutomationBooster.Dto.csproj" />
     <ProjectReference Include="..\FTOptixNetPlugin.DatabaseMaintenance\FTOptixNetPlugin.DatabaseMaintenance.csproj" />
     <ProjectReference Include="..\FTOptixNetPlugin.NetServer\FTOptixNetPlugin.NetServer.csproj" />
+    <ProjectReference Include="..\FTOptixNetPlugin.PidRoutine\FTOptixNetPlugin.PidRoutine.csproj" />
     <ProjectReference Include="..\InternalWebService\InternalWebService.csproj" />
     <ProjectReference Include="..\Process.PIDLoader\Process.PIDLoader.csproj" />
     <ProjectReference Include="..\ProcessReply\ProcessReply.csproj" />

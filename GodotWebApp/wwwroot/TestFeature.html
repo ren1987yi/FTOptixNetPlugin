@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+		<title>装配</title>
+		<style>
+html, body, #canvas {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+body {
+	color: white;
+	background-color: black;
+	overflow: hidden;
+	touch-action: none;
+}
+
+#canvas {
+	display: block;
+}
+
+#canvas:focus {
+	outline: none;
+}
+
+#status, #status-splash, #status-progress {
+	position: absolute;
+	left: 0;
+	right: 0;
+}
+
+#status, #status-splash {
+	top: 0;
+	bottom: 0;
+}
+
+#status {
+	background-color: #242424;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+}
+
+#status-splash {
+	max-height: 100%;
+	max-width: 100%;
+	margin: auto;
+}
+
+#status-splash.show-image--false {
+	display: none;
+}
+
+#status-splash.fullsize--true {
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+}
+
+#status-splash.use-filter--false {
+	image-rendering: pixelated;
+}
+
+#status-progress, #status-notice {
+	display: none;
+}
+
+#status-progress {
+	bottom: 10%;
+	width: 50%;
+	margin: 0 auto;
+}
+
+#status-notice {
+	background-color: #5b3943;
+	border-radius: 0.5rem;
+	border: 1px solid #9b3943;
+	color: #e0e0e0;
+	font-family: 'Noto Sans', 'Droid Sans', Arial, sans-serif;
+	line-height: 1.3;
+	margin: 0 2rem;
+	overflow: hidden;
+	padding: 1rem;
+	text-align: center;
+	z-index: 1;
+}
+		</style>
+		<link id="-gd-engine-icon" rel="icon" type="image/png" href="TestFeature.icon.png" />
+<link rel="apple-touch-icon" href="TestFeature.apple-touch-icon.png"/>
+
+	</head>
+	<body>
+		<canvas id="canvas">
+			Your browser does not support the canvas tag.
+		</canvas>
+
+		<noscript>
+			Your browser does not support JavaScript.
+		</noscript>
+
+		<div id="status">
+			<img id="status-splash" class="show-image--true fullsize--true use-filter--true" src="TestFeature.png" alt="">
+			<progress id="status-progress"></progress>
+			<div id="status-notice"></div>
+		</div>
+
+		<script src="TestFeature.js"></script>
+		<script>
+// 自动清除残留的 Service Worker
+if ('serviceWorker' in navigator) {
+	navigator.serviceWorker.getRegistrations().then(function(registrations) {
+		registrations.forEach(function(registration) {
+			registration.unregister();
+		});
+	});
+}
+		</script>
+		<script>
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"TestFeature","experimentalVK":false,"fileSizes":{"TestFeature.pck":92270492,"TestFeature.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_THREADS_ENABLED = false;
+const engine = new Engine(GODOT_CONFIG);
+
+// Chrome HTTP 缓存和 Cache Storage 都放不下 ~800MB pck（clone/put 会静默失败）。
+// 用 OPFS 把下载流直接写入磁盘，二次打开从本地文件读。
+(function installGodotAssetCache() {
+	const origFetch = window.fetch.bind(window);
+	const sizes = (GODOT_CONFIG && GODOT_CONFIG.fileSizes) || {};
+	const log = function () { console.info.apply(console, ['[godot-cache]'].concat([].slice.call(arguments))); };
+	const warn = function () { console.warn.apply(console, ['[godot-cache]'].concat([].slice.call(arguments))); };
+
+	if (navigator.storage && navigator.storage.persist) {
+		navigator.storage.persist().then(function (ok) { log('persist', ok); }).catch(function (e) { warn('persist', e); });
+	}
+	if (navigator.storage && navigator.storage.estimate) {
+		navigator.storage.estimate().then(function (e) {
+			log('quota', Math.round((e.usage || 0) / 1048576) + 'MB / ' + Math.round((e.quota || 0) / 1048576) + 'MB');
+		}).catch(function (e) { warn('estimate', e); });
+	}
+
+	function assetName(url) {
+		try {
+			return new URL(url, location.href).pathname.split('/').pop();
+		} catch (err) {
+			return String(url).split('?')[0].split('/').pop();
+		}
+	}
+
+	function mimeFor(name) {
+		return /\.wasm$/i.test(name) ? 'application/wasm' : 'application/octet-stream';
+	}
+
+	async function readOpfs(name) {
+		if (!navigator.storage || !navigator.storage.getDirectory) {
+			return null;
+		}
+		try {
+			const root = await navigator.storage.getDirectory();
+			const handle = await root.getFileHandle(name);
+			const file = await handle.getFile();
+			const expect = sizes[name] || 0;
+			log('opfs stat', name, 'size', file.size, 'expect', expect);
+			if (!file.size || (expect && file.size !== expect)) {
+				warn('incomplete file, deleting', name);
+				try { await root.removeEntry(name); } catch (e) {}
+				return null;
+			}
+			return new Response(file.stream(), {
+				status: 200,
+				headers: {
+					'Content-Type': mimeFor(name),
+					'Content-Length': String(file.size),
+				},
+			});
+		} catch (err) {
+			if (!err || err.name !== 'NotFoundError') {
+				warn('opfs read', name, err);
+			}
+			return null;
+		}
+	}
+
+	async function writeOpfs(name, response) {
+		const root = await navigator.storage.getDirectory();
+		const tmpName = name + '.part';
+		const handle = await root.getFileHandle(tmpName, { create: true });
+		const writable = await handle.createWritable({ keepExistingData: false });
+		const reader = response.body.getReader();
+		let written = 0;
+		let lastLog = 0;
+		try {
+			while (true) {
+				const chunk = await reader.read();
+				if (chunk.done) {
+					break;
+				}
+				await writable.write(chunk.value);
+				written += chunk.value.byteLength;
+				if (written - lastLog >= 64 * 1048576) {
+					lastLog = written;
+					log('opfs writing', name, Math.round(written / 1048576) + 'MB');
+				}
+			}
+			await writable.close();
+		} catch (err) {
+			try { await writable.abort(); } catch (e) {}
+			throw err;
+		}
+		const file = await handle.getFile();
+		const expect = sizes[name] || 0;
+		if (expect && file.size !== expect) {
+			try { await root.removeEntry(tmpName); } catch (e) {}
+			throw new Error('size mismatch got ' + file.size + ' expect ' + expect);
+		}
+		try { await root.removeEntry(name); } catch (e) {}
+		if (handle.move) {
+			await handle.move(name);
+		} else {
+			const dest = await root.getFileHandle(name, { create: true });
+			const destWriter = await dest.createWritable({ keepExistingData: false });
+			await file.stream().pipeTo(destWriter);
+			try { await root.removeEntry(tmpName); } catch (e) {}
+		}
+		log('opfs wrote', name, file.size);
+	}
+
+	async function opfsSize(name) {
+		try {
+			const root = await navigator.storage.getDirectory();
+			const handle = await root.getFileHandle(name);
+			const file = await handle.getFile();
+			return file.size;
+		} catch (err) {
+			return 0;
+		}
+	}
+
+	async function purgeOpfs(name) {
+		if (!navigator.storage || !navigator.storage.getDirectory) {
+			return;
+		}
+		try {
+			const root = await navigator.storage.getDirectory();
+			try { await root.removeEntry(name); } catch (e) {}
+			try { await root.removeEntry(name + '.part'); } catch (e) {}
+			log('purged stale', name);
+		} catch (err) {
+			warn('purge', name, err);
+		}
+	}
+
+	async function getRemoteLength(name) {
+		try {
+			const head = await origFetch(name, { method: 'HEAD', cache: 'no-store' });
+			if (head && head.ok) {
+				const len = head.headers.get('Content-Length');
+				if (len && Number(len) > 0) {
+					return Number(len);
+				}
+			}
+		} catch (err) {
+			warn('HEAD', name, err);
+		}
+		try {
+			const ranged = await origFetch(name, {
+				method: 'GET',
+				headers: { Range: 'bytes=0-0' },
+				cache: 'no-store',
+			});
+			const cr = ranged && ranged.headers.get('Content-Range');
+			const match = cr && /\/(\d+)\s*$/.exec(cr);
+			if (match) {
+				return Number(match[1]);
+			}
+		} catch (err) {
+			warn('Range', name, err);
+		}
+		return 0;
+	}
+
+	async function syncWithDeployed() {
+		const files = Object.keys(sizes);
+		if (!files.length) {
+			return true;
+		}
+		let remoteStamp = '';
+		for (let i = 0; i < files.length; i++) {
+			const name = files[i];
+			const remote = await getRemoteLength(name);
+			const local = await opfsSize(name);
+			const htmlExpect = Number(sizes[name] || 0);
+			log('deploy check', name, 'remote', remote, 'opfs', local, 'html', htmlExpect);
+			if (remote && local && remote !== local) {
+				await purgeOpfs(name);
+			}
+			if (remote) {
+				remoteStamp += name + ':' + remote + ';';
+			}
+			if (remote && htmlExpect && remote !== htmlExpect) {
+				const params = new URLSearchParams(location.search);
+				if (params.get('_asset') !== String(remote)) {
+					params.set('_asset', String(remote));
+					log('html stale, reload', params.toString());
+					location.replace(location.pathname + '?' + params.toString() + location.hash);
+					return false;
+				}
+			}
+		}
+		try {
+			localStorage.setItem('godot-deploy:' + location.pathname, remoteStamp);
+		} catch (e) {}
+		return true;
+	}
+
+	window.fetch = function (input, init) {
+		const method = String((init && init.method) || (typeof Request !== 'undefined' && input instanceof Request && input.method) || 'GET').toUpperCase();
+		if (method !== 'GET' || (init && init.cache === 'no-store')) {
+			return origFetch(input, init);
+		}
+		const url = (typeof input === 'string') ? input : (input && input.url) || '';
+		if (!/\.(pck|wasm)(\?|$)/i.test(url)) {
+			return origFetch(input, init);
+		}
+		const name = assetName(url);
+		return readOpfs(name).then(function (cached) {
+			if (cached) {
+				log('hit', name);
+				return cached;
+			}
+			log('miss', name);
+			return origFetch(input, init).then(function (response) {
+				if (!response || !response.ok || !response.body) {
+					return response;
+				}
+				const clone = response.clone();
+				writeOpfs(name, clone).catch(function (err) {
+					warn('opfs write failed', name, err && err.name, err && err.message, err);
+				});
+				return response;
+			});
+		});
+	};
+
+	window.__godotSyncAssets = syncWithDeployed;
+}());
+
+// 将 URL 参数转换为 --key=value 格式
+function getUrlArgs() {
+	var args = [];
+	var params = new URLSearchParams(window.location.search);
+	params.forEach(function(value, key) {
+		if (key === '_asset') {
+			return;
+		}
+		if (value !== '') {
+			args.push('--' + key + '=' + value);
+		} else {
+			args.push('--' + key);
+		}
+	});
+	return args;
+}
+
+(function () {
+	const statusOverlay = document.getElementById('status');
+	const statusProgress = document.getElementById('status-progress');
+	const statusNotice = document.getElementById('status-notice');
+
+	let initializing = true;
+	let statusMode = '';
+
+	function setStatusMode(mode) {
+		if (statusMode === mode || !initializing) {
+			return;
+		}
+		if (mode === 'hidden') {
+			statusOverlay.remove();
+			initializing = false;
+			return;
+		}
+		statusOverlay.style.visibility = 'visible';
+		statusProgress.style.display = mode === 'progress' ? 'block' : 'none';
+		statusNotice.style.display = mode === 'notice' ? 'block' : 'none';
+		statusMode = mode;
+	}
+
+	function setStatusNotice(text) {
+		while (statusNotice.lastChild) {
+			statusNotice.removeChild(statusNotice.lastChild);
+		}
+		const lines = text.split('\n');
+		lines.forEach((line) => {
+			statusNotice.appendChild(document.createTextNode(line));
+			statusNotice.appendChild(document.createElement('br'));
+		});
+	}
+
+	function displayFailureNotice(err) {
+		console.error(err);
+		if (err instanceof Error) {
+			setStatusNotice(err.message);
+		} else if (typeof err === 'string') {
+			setStatusNotice(err);
+		} else {
+			setStatusNotice('An unknown error occurred.');
+		}
+		setStatusMode('notice');
+		initializing = false;
+	}
+
+	const missing = Engine.getMissingFeatures({
+		threads: GODOT_THREADS_ENABLED,
+	});
+
+	if (missing.length !== 0) {
+		if (GODOT_CONFIG['serviceWorker'] && GODOT_CONFIG['ensureCrossOriginIsolationHeaders'] && 'serviceWorker' in navigator) {
+			let serviceWorkerRegistrationPromise;
+			try {
+				serviceWorkerRegistrationPromise = navigator.serviceWorker.getRegistration();
+			} catch (err) {
+				serviceWorkerRegistrationPromise = Promise.reject(new Error('Service worker registration failed.'));
+			}
+			Promise.race([
+				serviceWorkerRegistrationPromise.then((registration) => {
+					if (registration != null) {
+						return Promise.reject(new Error('Service worker already exists.'));
+					}
+					return registration;
+				}).then(() => engine.installServiceWorker()),
+				new Promise((resolve) => {
+					setTimeout(() => resolve(), 2000);
+				}),
+			]).then(() => {
+				window.location.reload();
+			}).catch((err) => {
+				console.error('Error while registering service worker:', err);
+			});
+		} else {
+			const missingMsg = 'Error\nThe following features required to run Godot projects on the Web are missing:\n';
+			displayFailureNotice(missingMsg + missing.join('\n'));
+		}
+	} else {
+		setStatusMode('progress');
+		const startEngine = function () {
+			engine.startGame({
+				'onProgress': function (current, total) {
+					if (current > 0 && total > 0) {
+						statusProgress.value = current;
+						statusProgress.max = total;
+					} else {
+						statusProgress.removeAttribute('value');
+						statusProgress.removeAttribute('max');
+					}
+				},
+				'args': getUrlArgs()
+			}).then(() => {
+				setStatusMode('hidden');
+			}, displayFailureNotice);
+		};
+		const sync = window.__godotSyncAssets ? window.__godotSyncAssets() : Promise.resolve(true);
+		sync.then(function (ok) {
+			if (ok === false) {
+				return;
+			}
+			startEngine();
+		}).catch(function (err) {
+			console.warn('[godot-cache] deploy check failed, start anyway', err);
+			startEngine();
+		});
+	}
+}());
+		</script>
+	</body>
+</html>
+

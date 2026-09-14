@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <Title>FTOptixNetPlugin.PidRoutine</Title>
+	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+	  <Authors>Renyi</Authors>
+	  <Company></Company>
+	  <Product />
+	  <Description></Description>
+	  <PackageProjectUrl></PackageProjectUrl>
+	  <PackageTags>FTOptix;.Net;WebService</PackageTags>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <RepositoryUrl>https://github.com/ren1987yi/FTOptixNetPlugin.git</RepositoryUrl>
+	  <Version>0.0.0.1-alpha</Version>
+  </PropertyGroup>
+
+
+	<ItemGroup>
+		<Content Include="PidRoutineAssets\**" copyToOutput="true" CopyToOutputDirectory="Always">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\PidRoutineAssets;content</PackagePath>
+			<IncludeInPackage>true</IncludeInPackage>
+			<CopyToOutput>true</CopyToOutput>
+			<BuildAction>Content</BuildAction>
+			<copyToOutput>true</copyToOutput>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</Content>
+	</ItemGroup>
+
+
+
+	<ItemGroup>
+		
+		<PackageReference Include="DotNetWebServer" Version="0.0.1.2">
+
+		</PackageReference>
+	
+	</ItemGroup>
+</Project>

@@ -2,8 +2,8 @@
 #define PROCESS_REPLAY11
 #define SCRIBAN11
 #define DXF11
-#define INTER_WEBSERVER
-
+#define INTER_WEBSERVER22
+#define PID_WEBSERVER11
 
 #if WEBSOCKET
 using FTOptixNetPlugin.NetServer;
@@ -32,14 +32,97 @@ using Process.PIDLoader;
 using System.Diagnostics;
 #endif
 
+using AutomationBooster.Dto;
+using AutomationBooster.Dto.CadDsl;
 using DotNetWebServer;
+using FTOptixNetPlugin.PidRoutine;
+using FTOptixNetPlugin.PidRoutine.CadModel;
+using FTOptixNetPlugin.PidRoutine.Model;
 using InternalWebService;
-
+using Newtonsoft.Json;
 namespace SampleCode2
 {
     internal class Program
     {
+
         static void Main(string[] args)
+        {
+            var cfg = new Configuration()
+            {
+                UploadFileFolder = "uploadfiles",
+                DownloadFolderName = "downloadfiles",
+            };
+            var app = new WebApplication(System.Net.IPAddress.Any, 49002, string.Empty, AppData.Instance.WebRoot, TimeSpan.FromSeconds(30));
+
+            app.AddInternalServer(cfg);
+
+
+
+            AppData.Instance.ControlActionDelegateManager.Register("echart", "load", (body) =>
+            {
+                var option = new
+                {
+                    xAxis = new
+                    {
+                        type = "category",
+                        data = new object[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" }
+                    },
+                    yAxis = new
+                    {
+                        type = "value"
+                    },
+                    series = new object[] {
+                        new {
+                          data = new object[]{1501, 2301, 2241, 2181, 1351, 1471, 2601 },
+                          type = "line"
+                        }
+                      }
+                };
+
+                return new
+                {
+                    success = true,
+                    data = option
+                };
+                //return "{ }";
+            });
+
+            AppData.Instance.ControlActionDelegateManager.Register("echart", "getdata", (body) =>
+            {
+
+                var rnd = new Random();
+
+                var option = new
+                {
+                    series = new[]
+                    {
+                        new
+                        {
+                            data = new object[]{rnd.Next(100), rnd.Next(100), rnd.Next(100), rnd.Next(100), rnd.Next(100), rnd.Next(100), rnd.Next(100), }
+                        }
+                    }
+                };
+
+                return new
+                {
+                    success = true,
+                    data = option
+                };
+            });
+
+            app.Start();
+
+            Console.ReadLine();
+        }
+
+
+
+
+
+
+
+
+        static void Main22(string[] args)
         {
 #if WEBSOCKET
 
@@ -243,19 +326,44 @@ namespace SampleCode2
 
 #endif
 
+#if PID_WEBSERVER
+
+
+            var folder = FTOptixNetPlugin.PidRoutine.ServiceExtensions.GetWebRoot();
+
+            var app = new WebApplication(System.Net.IPAddress.Any, 49002, string.Empty, folder, TimeSpan.FromSeconds(30));
+
+            var cfg = new ServerConfiguration()
+            {
+                OpenFunction = Processer.Open,
+                SearchFunction = Processer.Search
+            };
+            var cc = new Cache22();
+
+
+            app.AddPidRoutineServer(cfg, cc);
+
+            app.Start();
+
+            Console.ReadLine();
+
+#endif
 
 
 
             Console.WriteLine("done");
         }
 
-        static void SQL_Maintenance() {
+
+
+        static void SQL_Maintenance()
+        {
 
 
             FTOptixNetPlugin.DatabaseMaintenance.MSSQL sqlCli = new FTOptixNetPlugin.DatabaseMaintenance.MSSQL("172.168.101.120", 1433, "sa", "123", 30);
 
             var dbName = "DB_Mgt_Test";
-            
+
             var bExit = false;
             var backup_folder = @"C:\database\mssql\backup";
             while (true)
@@ -306,7 +414,7 @@ namespace SampleCode2
 
                         if (sqlCli.CopyDatabaseFile(mdf, n_mdf))
                         {
-                            if(sqlCli.CopyDatabaseFile(ldf, n_ldf))
+                            if (sqlCli.CopyDatabaseFile(ldf, n_ldf))
                             {
                                 Console.WriteLine($"copy database file is ok");
                             }
@@ -319,7 +427,7 @@ namespace SampleCode2
                     case "6":
 
                         var fff = sqlCli.ListFolderFiles(backup_folder);
-                        foreach(var filepath in fff)
+                        foreach (var filepath in fff)
                         {
                             Console.WriteLine(filepath);
                         }
@@ -336,7 +444,7 @@ namespace SampleCode2
                         break;
 
                     case "8":
-                        
+
                         if (sqlCli.IsExistsDatabase(dbName) == 1)
                         {
 
@@ -344,7 +452,7 @@ namespace SampleCode2
                             dbfiles.TryGetValue(dbName, out var old_mdf);
                             dbfiles.TryGetValue(dbName + "_log", out var old_ldf);
 
-                            
+
 
 
 
@@ -591,4 +699,437 @@ b = {{ item.b }}
 
 
 
+}
+
+
+
+
+
+
+namespace PidRoutineHandle
+{
+
+    public class Cache22 : ICache<ProcessPidParseResult>, ICache
+    {
+
+        Dictionary<string, ProcessPidParseResult> _cache = new Dictionary<string, ProcessPidParseResult>(StringComparer.OrdinalIgnoreCase);
+
+        public ProcessPidParseResult Get(string filepath)
+        {
+
+            if (!_cache.TryGetValue(filepath, out var result))
+            {
+
+                result = load(filepath);
+                _cache.Add(filepath, result);
+            }
+            return result;
+
+
+
+        }
+
+        public void Refresh()
+        {
+            //throw new NotImplementedException();
+            foreach (var kv in _cache)
+            {
+                var r = load(kv.Key);
+                _cache[kv.Key] = r;
+            }
+        }
+
+        public void Remove(string key)
+        {
+            //throw new NotImplementedException();
+
+            _cache.Remove(key);
+
+        }
+
+
+        private ProcessPidParseResult load(string filepath)
+        {
+            var settings = new JsonSerializerSettings()
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All,
+            };
+
+            var result = JsonConvert.DeserializeObject<ProcessPidParseResult>(System.IO.File.ReadAllText(filepath), settings);
+
+            return result;
+        }
+
+    }
+
+
+
+
+    public class Processer
+    {
+        public static object Open(string filepath, string areaHandle, ICache cache)
+        {
+            var _cache = cache as Cache22;
+
+            if (_cache == null)
+            {
+                return null;
+            }
+
+
+            var data = _cache.Get(filepath);
+            if (data == null)
+            {
+                return null;
+            }
+
+            if (!long.TryParse(areaHandle, out var handle))
+            {
+                return null;
+            }
+
+            var area = data.Org.Areas.Where(a => a.Handle == handle).FirstOrDefault();
+            if (area != null)
+            {
+                var dsl = data.Dsl;
+                IEnumerable<Entity> allentities = null;
+                BBox bbox = dsl.BBox;
+                if (area == null)
+                {
+                    allentities = dsl.Entities;
+                }
+                else
+                {
+                    bbox = area.BBox;
+                    allentities = dsl.Entities.Where(e => area.CadEntityHandles.Contains(e.Handle));
+                }
+
+                allentities = allentities.Union(dsl.Entities.Where(e => e.Handle == area.Handle));
+
+                var page = new Page();
+                var size = Math.Max(bbox.Width, bbox.Height);
+                page.Width = (long)size;
+                page.Height = (long)size;
+                buildPage(page, bbox, allentities, area);
+                return page;
+            }
+            return null;
+
+        }
+
+        public static object Search(SearchRequest req, ICache cache)
+        {
+            return null;
+        }
+
+        static (byte R, byte G, byte B) LongToRgb(long colorValue)
+        {
+            // Mask and shift to extract each component
+            byte r = (byte)((colorValue) & 0xFF);
+            byte g = (byte)((colorValue >> 8) & 0xFF);
+            byte b = (byte)(colorValue >> 16 & 0xFF);
+            return (r, g, b);
+        }
+        private static Point2D CoordinateTransformation(Point2D point, BBox bbox)
+        {
+            var npoint = new Point2D();
+
+            npoint.X = point.X - bbox.Min.X;
+            npoint.Y = bbox.Max.Y - point.Y;
+
+            return npoint;
+        }
+
+        private static void buildPage(Page page, BBox bbox, IEnumerable<Entity> items, AutomationBooster.Dto.ProcessInfo.Area area)
+        {
+            var alllines = items.OfType<AutomationBooster.Dto.CadDsl.Polyline>();
+
+            foreach (var kv in alllines.GroupBy(c => c.Color.Value))
+            {
+                var color = LongToRgb(kv.Key);
+
+
+                foreach (var kv2 in kv.GroupBy(c => c.LineType))
+                {
+
+                    var polyline = new FTOptixNetPlugin.PidRoutine.CadModel.Polyline();
+                    var _lineType = kv2.Key.ToUpper();
+                    polyline.LineType = string.IsNullOrWhiteSpace(_lineType) || _lineType == "CONTINUOUS" ? "CONTINUOUS" : "DASHED";
+
+
+
+                    polyline.Color = new float[] { color.R / 255f, color.G / 255f, color.B / 255f, 1.0f };
+                    polyline.LongColor = kv.Key;
+
+                    foreach (var item in kv2)
+                    {
+                        var points = item.Points.Select(p => CoordinateTransformation(p, bbox)).Select(c => c);
+                        var _points = new List<object>();
+                        foreach (var p in points)
+                        {
+                            _points.Add(new
+                            {
+                                x = p.X,
+                                y = p.Y,
+                            });
+                        }
+
+                        if (item.IsClosed)
+                        {
+                            var np = points.First();
+                            _points.Add(new
+                            {
+                                x = np.X,
+                                y = np.Y,
+                            });
+                        }
+
+                        polyline.Points.Add(_points);
+
+                    }
+                    page.PolyLines.Add(polyline);
+                }
+
+            }
+
+
+
+
+            var allTexts = items.OfType<AutomationBooster.Dto.CadDsl.Text>();
+
+
+            foreach (var kv in allTexts.GroupBy(c => c.Color.Value))
+            {
+                var color = LongToRgb(kv.Key);
+
+                foreach (var item in kv)
+                {
+                    var text = new FTOptixNetPlugin.PidRoutine.CadModel.Text();
+                    text.Color = new float[] { color.R / 255f, color.G / 255f, color.B / 255f, 1.0f };
+                    text.Value = item.Value;
+                    var np = CoordinateTransformation(item.Position, bbox);
+                    text.Position = new
+                    {
+                        x = np.X,
+                        y = np.Y,
+                    };
+                    text.Rotate = item.Rotation;
+                    text.Height = item.Height;
+                    page.Texts.Add(text);
+                }
+            }
+
+
+
+            var allCircles = items.OfType<AutomationBooster.Dto.CadDsl.Circle>();
+            foreach (var kv in allCircles.GroupBy(c => c.Color.Value))
+            {
+                var color = LongToRgb(kv.Key);
+
+                foreach (var item in kv)
+                {
+                    var _item = new FTOptixNetPlugin.PidRoutine.CadModel.Circle();
+                    _item.Color = new float[] { color.R / 255f, color.G / 255f, color.B / 255f, 1.0f };
+
+                    var np = CoordinateTransformation(item.Center, bbox);
+                    _item.Center = new
+                    {
+                        x = np.X,
+                        y = np.Y,
+                    };
+                    _item.Radius = item.Radius;
+                    page.Circles.Add(_item);
+                }
+            }
+
+
+            var allArcs = items.OfType<AutomationBooster.Dto.CadDsl.Arc>();
+            foreach (var kv in allArcs.GroupBy(c => c.Color.Value))
+            {
+                var color = LongToRgb(kv.Key);
+
+                foreach (var item in kv)
+                {
+                    var _item = new FTOptixNetPlugin.PidRoutine.CadModel.Arc();
+                    _item.Color = new float[] { color.R / 255f, color.G / 255f, color.B / 255f, 1.0f };
+
+                    var np = CoordinateTransformation(item.Center, bbox);
+                    _item.Center = new
+                    {
+                        x = np.X,
+                        y = np.Y,
+                    };
+                    _item.Radius = item.Radius;
+
+                    _item.StartAngle = item.StartAnagle;
+                    _item.EndAngle = item.EndAnagle;
+
+                    page.Arcs.Add(_item);
+                }
+            }
+
+
+            var allblocks = items.OfType<AutomationBooster.Dto.CadDsl.Block>();
+
+            foreach (var block in allblocks)
+            {
+                var parentPos = block.Position;
+
+                foreach (var item in block.Items.OfType<AutomationBooster.Dto.CadDsl.Polyline>())
+                {
+                    var colorValue = item.Color.Value;
+                    var color = LongToRgb(colorValue);
+                    var _color = new float[] { color.R / 255f, color.G / 255f, color.B / 255f, 1.0f };
+
+
+                    var _pl = page.PolyLines.Where(c => c.LongColor == colorValue).FirstOrDefault();
+
+                    if (_pl == null)
+                    {
+                        _pl = new FTOptixNetPlugin.PidRoutine.CadModel.Polyline();
+                        _pl.Color = _color;
+                        _pl.LongColor = colorValue;
+                        page.PolyLines.Add(_pl);
+                    }
+
+
+                    var points = item.Points.Select(p => CoordinateTransformation(p + parentPos, bbox)).Select(c => c);
+                    var _points = new List<object>();
+                    foreach (var p in points)
+                    {
+                        _points.Add(new
+                        {
+                            x = p.X,
+                            y = p.Y,
+                        });
+                    }
+
+                    if (item.IsClosed)
+                    {
+                        var np = points.First();
+                        _points.Add(new
+                        {
+                            x = np.X,
+                            y = np.Y,
+                        });
+                    }
+                    _pl.Points.Add(_points);
+                }
+
+                foreach (var item in block.Items.OfType<AutomationBooster.Dto.CadDsl.Arc>())
+                {
+                    var _item = new FTOptixNetPlugin.PidRoutine.CadModel.Arc();
+
+                    var colorValue = item.Color.Value;
+                    var color = LongToRgb(colorValue);
+
+
+                    _item.Color = new float[] { color.R / 255f, color.G / 255f, color.B / 255f, 1.0f };
+
+                    var np = CoordinateTransformation(item.Center + parentPos, bbox);
+                    _item.Center = new
+                    {
+                        x = np.X,
+                        y = np.Y,
+                    };
+                    _item.Radius = item.Radius;
+
+                    _item.StartAngle = item.StartAnagle;
+                    _item.EndAngle = item.EndAnagle;
+
+                    page.Arcs.Add(_item);
+                }
+
+                foreach (var item in block.Items.OfType<AutomationBooster.Dto.CadDsl.Circle>())
+                {
+                    var _item = new FTOptixNetPlugin.PidRoutine.CadModel.Circle();
+
+                    var colorValue = item.Color.Value;
+                    var color = LongToRgb(colorValue);
+                    _item.Color = new float[] { color.R / 255f, color.G / 255f, color.B / 255f, 1.0f };
+
+
+                    var np = CoordinateTransformation(item.Center + parentPos, bbox);
+                    _item.Center = new
+                    {
+                        x = np.X,
+                        y = np.Y,
+                    };
+                    _item.Radius = item.Radius;
+                    page.Circles.Add(_item);
+                }
+
+
+                foreach (var item in block.Items.OfType<AutomationBooster.Dto.CadDsl.Text>())
+                {
+                    try
+                    {
+                        if (item.Color == null)
+                        {
+                            continue;
+                        }
+                        var text = new FTOptixNetPlugin.PidRoutine.CadModel.Text();
+
+
+
+                        var colorValue = item.Color.Value;
+
+                        var color = LongToRgb(colorValue);
+                        text.Color = new float[] { color.R / 255f, color.G / 255f, color.B / 255f, 1.0f };
+
+
+                        text.Value = item.Value;
+                        var np = CoordinateTransformation(item.Position + parentPos, bbox);
+                        text.Position = new
+                        {
+                            x = np.X,
+                            y = np.Y,
+                        };
+                        text.Rotate = item.Rotation;
+                        text.Height = item.Height;
+                        page.Texts.Add(text);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }
+
+
+
+
+            //换阀门
+
+            foreach (var block in allblocks)
+            {
+
+                var cmp = area.Components.Where(c => c.Handle == block.Handle).FirstOrDefault();
+                if (cmp != null)
+                {
+                    if (cmp.Name == "Valve")
+                    {
+                        var io = new Interactive();
+                        io.Text = cmp.Id ?? string.Empty;
+                        var pos = CoordinateTransformation(block.Position, bbox);
+                        io.Position = new
+                        {
+                            x = pos.X,
+                            y = pos.Y,
+                        };
+
+                        io.TextHeight = 4;
+                        io.Width = 10;
+                        io.Height = 10;
+                        io.Name = cmp.Name;
+                        io.Handle = block.Handle;
+                        page.Interactives.Add(io);
+                    }
+                }
+            }
+
+
+        }
+    }
 }

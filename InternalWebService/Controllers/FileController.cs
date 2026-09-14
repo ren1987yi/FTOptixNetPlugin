@@ -1,16 +1,17 @@
 ﻿using DotNetWebServer;
 using InternalWebService.DTO;
+using InternalWebService.Utils;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Net.Http.Headers;
-using System.IO;
 using System.Threading.Tasks;
-using InternalWebService.Utils;
+using System.Web;
 namespace InternalWebService.Controllers
 {
     public class FileController : HttpController
@@ -39,17 +40,23 @@ namespace InternalWebService.Controllers
         [HttpMethod(HttpMethodType.GET,"home")]
         public IResult GetPage()
         {
-           
-            var type = Request.GetHeaderValue("PAGE-TYPE");
+            var f = Request.Url;
 
-            switch (type.ToLower()) { 
+            Uri myUri = new Uri($"http://127.0.0.1{f}");
+            string mode = HttpUtility.ParseQueryString(myUri.Query).Get("m");
+
+
+
+            
+
+            switch (mode.ToLower()) { 
                 case "upload":
                     return GetUploadPage();
 
                 case "download":
                     return GetDownloadPage();
                 default:
-                    return GetDownloadPage();
+                    return new TextResult("parameter mode is error,must be upload or download");
             }
 
         }

@@ -68,6 +68,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptureScreen", "CaptureScr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalWebService", "InternalWebService\InternalWebService.csproj", "{B84C7448-701C-458B-9A84-F6968D22D653}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{BC37C666-F0CC-4C86-8D13-63AEFBC01A0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodotWebApp", "GodotWebApp\GodotWebApp.csproj", "{D60F1B03-E1E9-4E1C-B26F-BFD1ACEB5CD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTOptixNetPlugin.PidRoutine", "FTOptixNetPlugin.PidRoutine\FTOptixNetPlugin.PidRoutine.csproj", "{B578C441-BC73-4092-B11C-90F5B1E6D574}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomationBooster.Dto", "..\ProcessToolkits\AutomationBooster.Dto\AutomationBooster.Dto.csproj", "{1C4B119D-4EEB-EA37-0C29-D52076460B74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -308,6 +316,30 @@ Global
 		{B84C7448-701C-458B-9A84-F6968D22D653}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B84C7448-701C-458B-9A84-F6968D22D653}.Release|x64.ActiveCfg = Release|Any CPU
 		{B84C7448-701C-458B-9A84-F6968D22D653}.Release|x64.Build.0 = Release|Any CPU
+		{D60F1B03-E1E9-4E1C-B26F-BFD1ACEB5CD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D60F1B03-E1E9-4E1C-B26F-BFD1ACEB5CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D60F1B03-E1E9-4E1C-B26F-BFD1ACEB5CD2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D60F1B03-E1E9-4E1C-B26F-BFD1ACEB5CD2}.Debug|x64.Build.0 = Debug|Any CPU
+		{D60F1B03-E1E9-4E1C-B26F-BFD1ACEB5CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D60F1B03-E1E9-4E1C-B26F-BFD1ACEB5CD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D60F1B03-E1E9-4E1C-B26F-BFD1ACEB5CD2}.Release|x64.ActiveCfg = Release|Any CPU
+		{D60F1B03-E1E9-4E1C-B26F-BFD1ACEB5CD2}.Release|x64.Build.0 = Release|Any CPU
+		{B578C441-BC73-4092-B11C-90F5B1E6D574}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B578C441-BC73-4092-B11C-90F5B1E6D574}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B578C441-BC73-4092-B11C-90F5B1E6D574}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B578C441-BC73-4092-B11C-90F5B1E6D574}.Debug|x64.Build.0 = Debug|Any CPU
+		{B578C441-BC73-4092-B11C-90F5B1E6D574}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B578C441-BC73-4092-B11C-90F5B1E6D574}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B578C441-BC73-4092-B11C-90F5B1E6D574}.Release|x64.ActiveCfg = Release|Any CPU
+		{B578C441-BC73-4092-B11C-90F5B1E6D574}.Release|x64.Build.0 = Release|Any CPU
+		{1C4B119D-4EEB-EA37-0C29-D52076460B74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C4B119D-4EEB-EA37-0C29-D52076460B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C4B119D-4EEB-EA37-0C29-D52076460B74}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1C4B119D-4EEB-EA37-0C29-D52076460B74}.Debug|x64.Build.0 = Debug|Any CPU
+		{1C4B119D-4EEB-EA37-0C29-D52076460B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C4B119D-4EEB-EA37-0C29-D52076460B74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C4B119D-4EEB-EA37-0C29-D52076460B74}.Release|x64.ActiveCfg = Release|Any CPU
+		{1C4B119D-4EEB-EA37-0C29-D52076460B74}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -315,6 +347,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{04E76821-EC55-400A-BC83-2F581EC1DC0F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{D9A4EFAB-219B-4C11-ABA3-B11B2963A2B7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{D60F1B03-E1E9-4E1C-B26F-BFD1ACEB5CD2} = {BC37C666-F0CC-4C86-8D13-63AEFBC01A0F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B7E7C70-6E90-4B14-A452-7336B705386B}

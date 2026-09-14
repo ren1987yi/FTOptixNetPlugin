@@ -1,0 +1,6 @@
+@GodotWebApp_HostAddress = http://localhost:5056
+
+GET {{GodotWebApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
